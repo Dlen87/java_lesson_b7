@@ -23,5 +23,11 @@ public class Point {
         double sqrt = Math.sqrt(Math.pow(this.x2 - this.x, 2) + Math.pow(this.y2 - this.y, 2));
         return sqrt;
     }
+
+    public double distance(Point p2){
+
+        double sqrt = Math.sqrt(Math.pow(p2.x - this.x, 2) + Math.pow(p2.y - this.y, 2));
+        return sqrt;
+    }
 }
 

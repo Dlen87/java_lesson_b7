@@ -21,6 +21,15 @@ public class DlenFirstProgram {
         System.out.println("Вторая точка имеет координаты: x2=" + p3.x2 + " y2=" + p3.y2);
         System.out.println("Расстояние между двумя точками равно: " + p3.distance());
 
+        System.out.println("___________________________________________________________________");
+
+        Point p4 = new Point(-2, -2 );
+        Point p5 = new Point(3, 3);
+
+        System.out.println("Первая точка имеет координаты: x1=" + p4.x + " y1=" + p4.y);
+        System.out.println("Вторая точка имеет координаты: x2=" + p5.x + " y2=" + p5.y);
+        System.out.println("Расстояние между двумя точками равно: " + p4.distance(p5));
+
 
     }
 
