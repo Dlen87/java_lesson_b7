@@ -2,10 +2,3 @@ apply plugin: 'java'
 apply plugin: 'application'
 mainClassName = "by.stqa.lesson1.sandbox.DlenFirstProgram"
 
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile("org.testng:testng:7.0.0-beta7")
-}
