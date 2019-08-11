@@ -1,5 +1,6 @@
 package by.stqa.lesson2.addressbook;
 
+import java.io.File;
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 import org.testng.annotations.*;
@@ -13,7 +14,7 @@ public class GroupCreationTests {
 
   @BeforeMethod(alwaysRun = true)
   public void setUp() throws Exception {
-    String s = System.setProperty("webdriver.gecko.driver", "C:/Windows/System32/geckodriver.exe");
+    String s = System.setProperty("webdriver.gecko.driver", "C:/DevelDlen/java_lesson_b7/geckodriver/geckodriver.exe");
     wd = new FirefoxDriver();
     wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook/group.php");
