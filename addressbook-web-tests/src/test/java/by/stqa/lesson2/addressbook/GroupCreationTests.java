@@ -32,7 +32,7 @@ public class GroupCreationTests {
     public void testGroupCreation() throws Exception {
 
         initGroupCreation();
-        fillGroupForm(new GroupData("test1", "test2", "test3"));
+        fillGroupForm(new GroupData("test2", "test22", "test222"));
         submitGroupCreation();
         returnToGroupPage();
 
