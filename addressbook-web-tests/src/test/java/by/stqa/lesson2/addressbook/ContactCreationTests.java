@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.Select;
 public class ContactCreationTests {
   private WebDriver wd;
 
-  @BeforeClass(alwaysRun = true)
+  @BeforeMethod(alwaysRun = true)
   public void setUp() throws Exception {
     String s = System.setProperty("webdriver.gecko.driver", "C:/DevelDlen/java_lesson_b7/geckodriver/geckodriver.exe");
     wd = new FirefoxDriver();
@@ -30,7 +30,7 @@ public class ContactCreationTests {
   public void testContactCreation() throws Exception {
 
     addNewContact();
-    fillContactCreation(new ContactData("Vladimir", "Vladimirovich", "Putin", "PutinVova", "IBA", "Russia", "99896", "1003456789", "putin@mail.ru", "Moscow", "123", "19", "April", "1986", "test2"));
+    fillContactCreation(new ContactData("Vladimir", "Vladimirovich", "Putin", "PutinVova", "IBA", "Russia", "99896", "1003456789", "putin@mail.ru", "Moscow", "123", "19", "April", "1986"));
     submitContactCreation();
     returnToHomePage();
     loginOut();
@@ -70,7 +70,7 @@ public class ContactCreationTests {
     wd.findElement(By.name("email")).clear();
     wd.findElement(By.name("email")).sendKeys(contactData.getEmail());
     wasBornUser(contactData.getBday(), contactData.getBmonth(), contactData.getByear());
-    chooseGroupContact(contactData.getNew_group());
+
     wd.findElement(By.name("address2")).click();
     wd.findElement(By.name("address2")).clear();
     wd.findElement(By.name("address2")).sendKeys(contactData.getAddress2());
@@ -79,11 +79,6 @@ public class ContactCreationTests {
     wd.findElement(By.name("phone2")).sendKeys(contactData.getPhone2());
   }
 
-  private void chooseGroupContact(String new_group) {
-    wd.findElement(By.name("new_group")).click();
-    new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(new_group);
-    wd.findElement(By.xpath("(//option[@value='5'])[3]")).click();
-  }
 
   private void wasBornUser(String bday, String bmonth, String byear) {
     wd.findElement(By.name("bday")).click();
@@ -101,7 +96,7 @@ public class ContactCreationTests {
     wd.findElement(By.linkText("add new")).click();
   }
 
-  @AfterClass(alwaysRun = true)
+  @AfterMethod(alwaysRun = true)
   public void tearDown() throws Exception {
     wd.quit();
 
