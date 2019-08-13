@@ -8,10 +8,13 @@ import org.testng.annotations.BeforeMethod;
 
 import java.util.concurrent.TimeUnit;
 
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
+
 public class TestBase {
     protected WebDriver wd;
     protected boolean acceptNextAlert = true;
-    protected StringBuffer verificationErrors = new StringBuffer();
+    private StringBuffer verificationErrors = new StringBuffer();
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() throws Exception {
@@ -62,10 +65,12 @@ public class TestBase {
     }
 
 
-    @AfterMethod(alwaysRun = true)
-    public void tearDown() throws Exception {
-        wd.quit();
+    protected void selectedContacts() {
+      wd.findElement(By.name("selected[]")).click();
+    }
 
+    protected void gotoHomePage() {
+      wd.findElement(By.linkText("home")).click();
     }
 
     private boolean isElementPresent(By by) {
@@ -148,4 +153,15 @@ public class TestBase {
     protected void addNewContact() {
       wd.findElement(By.linkText("add new")).click();
     }
+
+    @AfterMethod(alwaysRun = true)
+    public void tearDown() throws Exception {
+      wd.quit();
+      String verificationErrorString = verificationErrors.toString();
+      if (!"".equals(verificationErrorString)) {
+        fail(verificationErrorString);
+      }
+    }
+
+
 }

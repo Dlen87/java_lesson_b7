@@ -35,22 +35,25 @@ public class ContactDeleteTests {
   @Test
   public void testContactDelete() throws Exception {
     selectedContacts();
-    acceptNextAlert = true;
+   // acceptNextAlert = true;
     deleteSelectedContacts();
-    confirmDeleteContacts();
+   // confirmDeleteContacts();
     gotoHomePage();
   }
-
+/*
   private void confirmDeleteContacts() {
     assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
-  }
+
+  }*/
 
   private void selectedContacts() {
     wd.findElement(By.name("selected[]")).click();
   }
 
   private void deleteSelectedContacts() {
+    acceptNextAlert = true;
     wd.findElement(By.xpath("//input[@value='Delete']")).click();
+    assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
   }
 
   private void gotoHomePage() {
