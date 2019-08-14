@@ -1,4 +1,4 @@
-package by.stqa.lesson2.addressbook;
+package by.stqa.lesson2.addressbook.tests;
 
 import org.testng.annotations.Test;
 

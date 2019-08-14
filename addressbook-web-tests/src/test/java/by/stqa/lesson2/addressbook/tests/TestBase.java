@@ -1,5 +1,6 @@
-package by.stqa.lesson2.addressbook;
+package by.stqa.lesson2.addressbook.tests;
 
+import by.stqa.lesson2.addressbook.ApplicationManager;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 

@@ -1,4 +1,4 @@
-package by.stqa.lesson2.addressbook;
+package by.stqa.lesson2.addressbook.modal;
 
 public class ContactData {
     private final String firstname;
