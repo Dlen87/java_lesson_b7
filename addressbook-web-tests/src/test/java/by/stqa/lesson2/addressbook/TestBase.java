@@ -1,6 +1,7 @@
 package by.stqa.lesson2.addressbook;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterMethod;
@@ -8,12 +9,11 @@ import org.testng.annotations.BeforeMethod;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 public class TestBase {
     protected WebDriver wd;
-    protected boolean acceptNextAlert = true;
+
     private StringBuffer verificationErrors = new StringBuffer();
 
     @BeforeMethod(alwaysRun = true)
@@ -65,31 +65,15 @@ public class TestBase {
     }
 
 
-    protected void selectedContacts() {
-      wd.findElement(By.name("selected[]")).click();
-    }
+   /* protected void selectedContacts() {
+     // wd.findElement(By.name("selected[]")).click();
+        wd.findElement(By.xpath("//td/input")).click();
+    }*/
 
     protected void gotoHomePage() {
       wd.findElement(By.linkText("home")).click();
     }
 
-    private boolean isElementPresent(By by) {
-        try {
-            wd.findElement(by);
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
-    private boolean isAlertPresent() {
-        try {
-            wd.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
-    }
 
     protected void deleteSelectedGroups() {
       wd.findElement(By.name("delete")).click();
@@ -157,10 +141,10 @@ public class TestBase {
     @AfterMethod(alwaysRun = true)
     public void tearDown() throws Exception {
       wd.quit();
-      String verificationErrorString = verificationErrors.toString();
+   /*   String verificationErrorString = verificationErrors.toString();
       if (!"".equals(verificationErrorString)) {
         fail(verificationErrorString);
-      }
+      }*/
     }
 
 

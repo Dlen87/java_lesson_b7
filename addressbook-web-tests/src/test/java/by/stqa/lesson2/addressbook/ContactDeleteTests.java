@@ -8,9 +8,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class ContactDeleteTests {
   private WebDriver wd;
-
-  private boolean acceptNextAlert = true;
-  private StringBuffer verificationErrors = new StringBuffer();
+ // private boolean acceptNextAlert = true;
+//  private StringBuffer verificationErrors = new StringBuffer();
 
   @BeforeMethod(alwaysRun = true)
   public void setUp() throws Exception {
@@ -34,26 +33,19 @@ public class ContactDeleteTests {
 
   @Test
   public void testContactDelete() throws Exception {
+    gotoHomePage();
     selectedContacts();
-   // acceptNextAlert = true;
     deleteSelectedContacts();
-   // confirmDeleteContacts();
     gotoHomePage();
   }
-/*
-  private void confirmDeleteContacts() {
-    assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
-
-  }*/
 
   private void selectedContacts() {
     wd.findElement(By.name("selected[]")).click();
   }
 
   private void deleteSelectedContacts() {
-    acceptNextAlert = true;
     wd.findElement(By.xpath("//input[@value='Delete']")).click();
-    assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
+    wd.switchTo().alert().accept();
   }
 
   private void gotoHomePage() {
@@ -63,10 +55,7 @@ public class ContactDeleteTests {
   @AfterMethod(alwaysRun = true)
   public void tearDown() throws Exception {
     wd.quit();
-    String verificationErrorString = verificationErrors.toString();
-    if (!"".equals(verificationErrorString)) {
-      fail(verificationErrorString);
-    }
+
   }
 
   private boolean isElementPresent(By by) {
@@ -87,18 +76,4 @@ public class ContactDeleteTests {
     }
   }
 
-  private String closeAlertAndGetItsText() {
-    try {
-      Alert alert = wd.switchTo().alert();
-      String alertText = alert.getText();
-      if (acceptNextAlert) {
-        alert.accept();
-      } else {
-        alert.dismiss();
-      }
-      return alertText;
-    } finally {
-      acceptNextAlert = true;
-    }
-  }
 }
