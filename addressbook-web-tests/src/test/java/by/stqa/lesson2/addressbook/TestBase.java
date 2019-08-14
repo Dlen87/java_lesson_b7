@@ -9,12 +9,9 @@ import org.testng.annotations.BeforeMethod;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.testng.Assert.fail;
-
 public class TestBase {
     protected WebDriver wd;
 
-    private StringBuffer verificationErrors = new StringBuffer();
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() throws Exception {
@@ -64,16 +61,9 @@ public class TestBase {
       wd.findElement(By.linkText("home page")).click();
     }
 
-
-   /* protected void selectedContacts() {
-     // wd.findElement(By.name("selected[]")).click();
-        wd.findElement(By.xpath("//td/input")).click();
-    }*/
-
     protected void gotoHomePage() {
       wd.findElement(By.linkText("home")).click();
     }
-
 
     protected void deleteSelectedGroups() {
       wd.findElement(By.name("delete")).click();
@@ -86,7 +76,6 @@ public class TestBase {
     protected void gotoGroupPage() {
       wd.findElement(By.linkText("groups")).click();
     }
-
 
     protected void submitContactCreation() {
       wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
@@ -141,11 +130,15 @@ public class TestBase {
     @AfterMethod(alwaysRun = true)
     public void tearDown() throws Exception {
       wd.quit();
-   /*   String verificationErrorString = verificationErrors.toString();
-      if (!"".equals(verificationErrorString)) {
-        fail(verificationErrorString);
-      }*/
     }
 
 
+    protected void selectedContacts() {
+      wd.findElement(By.name("selected[]")).click();
+    }
+
+    protected void deleteSelectedContacts() {
+      wd.findElement(By.xpath("//input[@value='Delete']")).click();
+      wd.switchTo().alert().accept();
+    }
 }
