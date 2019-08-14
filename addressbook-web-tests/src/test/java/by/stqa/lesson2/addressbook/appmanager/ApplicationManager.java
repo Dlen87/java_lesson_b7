@@ -1,4 +1,4 @@
-package by.stqa.lesson2.addressbook;
+package by.stqa.lesson2.addressbook.appmanager;
 
 import by.stqa.lesson2.addressbook.modal.ContactData;
 import by.stqa.lesson2.addressbook.modal.GroupData;
