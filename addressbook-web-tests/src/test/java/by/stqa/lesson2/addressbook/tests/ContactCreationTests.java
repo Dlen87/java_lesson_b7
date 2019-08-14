@@ -11,8 +11,8 @@ public class ContactCreationTests extends TestBase {
     app.getContactHelper().addNewContact();
     app.getContactHelper().fillContactCreation(new ContactData("MElena", "Ivanovna", "Ivanova", "EVova", "IBA2", "Russia", "99896", "1003456789", "putin@mail.ru", "Moscow", "123", "5", "March", "1986"));
     app.getContactHelper().submitContactCreation();
-    app.returnToHomePage();
-    app.loginOut();
+    app.getNavigationHelper().returnToHomePage();
+    app.getNavigationHelper().loginOut();
   }
 
 

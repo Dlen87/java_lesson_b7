@@ -6,9 +6,10 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.concurrent.TimeUnit;
 
-public class ApplicationManager extends NavigationHelper {
+public class ApplicationManager {
 
     public WebDriver wd;
+    private NavigationHelper navigationHelper;
     private ContactHelper contactHelper;
     private GroupHelper groupHelper;
 
@@ -19,6 +20,7 @@ public class ApplicationManager extends NavigationHelper {
         wd.get("http://localhost/addressbook/group.php");
         groupHelper = new GroupHelper(wd);
         contactHelper = new ContactHelper(wd);
+        navigationHelper = new NavigationHelper(wd);
         login("admin", "secret");
     }
 
@@ -31,26 +33,6 @@ public class ApplicationManager extends NavigationHelper {
         wd.findElement(By.xpath("//input[@value='Login']")).click();
     }
 
-    public void returnToGroupPage() {
-        wd.findElement(By.linkText("group page")).click();
-    }
-
-    public void loginOut() {
-        wd.findElement(By.linkText("Logout")).click();
-    }
-
-    public void returnToHomePage() {
-        wd.findElement(By.linkText("home page")).click();
-    }
-
-    public void gotoHomePage() {
-        wd.findElement(By.linkText("home")).click();
-    }
-
-    public void gotoGroupPage() {
-        wd.findElement(By.linkText("groups")).click();
-    }
-
     public void stop() {
         wd.quit();
     }
@@ -61,5 +43,9 @@ public class ApplicationManager extends NavigationHelper {
 
     public ContactHelper getContactHelper() {
         return contactHelper;
+    }
+
+    public NavigationHelper getNavigationHelper() {
+        return navigationHelper;
     }
 }
