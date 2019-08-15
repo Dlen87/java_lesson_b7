@@ -48,4 +48,12 @@ public class ContactHelper extends BaseHelper{
         click(By.xpath("//input[@value='Delete']"));
         wd.switchTo().alert().accept();
     }
+
+    public void modificationSelectedContact() {
+        click(By.xpath("(//img[@alt='Edit'])[3]"));
+    }
+
+    public void updateSelectedContact() {
+        click(By.name("update"));
+    }
 }
