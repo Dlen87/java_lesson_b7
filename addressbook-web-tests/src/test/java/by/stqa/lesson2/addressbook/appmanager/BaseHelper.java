@@ -16,10 +16,31 @@ public class BaseHelper {
     }
 
     protected void type(By locator, String text) {
-        wd.findElement(locator).click();
-        wd.findElement(locator).clear();
-        wd.findElement(locator).sendKeys(text);
+        click(locator);
+        if (text != null) {
+            String equalText = wd.findElement(locator).getAttribute("value");
+            if (!text.equals(equalText)){
+                wd.findElement(locator).clear();
+                wd.findElement(locator).sendKeys(text);
+            }
+        }
     }
+
+  /*  @Override
+    public  boolean equals(Object obj){
+        if (this == obj){
+            return true;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        if (obj == null){
+            return false;
+        }
+        String equalText = (String) obj;
+        if ()
+        return true;
+    }*/
 
     protected void typeSelect(String bday, By locator) {
         wd.findElement(locator).click();
