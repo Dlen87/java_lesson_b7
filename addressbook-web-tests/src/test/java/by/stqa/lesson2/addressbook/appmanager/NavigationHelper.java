@@ -9,9 +9,6 @@ public class NavigationHelper extends BaseHelper{
         super(wd);
     }
 
-    public void returnToGroupPage() {
-        click(By.linkText("group page"));
-    }
 
     public void loginOut() {
         click(By.linkText("Logout"));
