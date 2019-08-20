@@ -2,8 +2,10 @@ package by.stqa.lesson2.addressbook.appmanager;
 
 import by.stqa.lesson2.addressbook.modal.ContactData;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 public class ContactHelper extends BaseHelper{
 
@@ -15,7 +17,7 @@ public class ContactHelper extends BaseHelper{
         click(By.xpath("(//input[@name='submit'])[2]"));
     }
 
-    public void fillContactCreation(ContactData contactData) {
+    public void fillContactCreation(ContactData contactData, boolean contactForm) {
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("middlename"), contactData.getMiddlename());
         type(By.name("lastname"), contactData.getLastname());
@@ -28,6 +30,13 @@ public class ContactHelper extends BaseHelper{
         wasBornUser(contactData.getBday(), contactData.getBmonth(), contactData.getByear());
         type(By.name("address2"), contactData.getAddress2());
         type(By.name("phone2"), contactData.getPhone2());
+        if (contactForm){
+           new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        }
+        else{
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        }
+
     }
 
     private void wasBornUser(String bday, String bmonth, String byear) {

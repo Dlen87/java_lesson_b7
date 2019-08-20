@@ -10,7 +10,7 @@ public class ContactModificationTests extends TestBase {
         app.getNavigationHelper().gotoHomePage();
         app.getContactHelper().selectedContacts();
         app.getContactHelper().modificationSelectedContact();
-        app.getContactHelper().fillContactCreation(new ContactData("A2", "PIvanovna", "A1", "EVova", "IBA2", "Russia", "99896", "1003456789", "putin@mail.ru", "Moscow", "123", "15", "March", "1986"));
+        app.getContactHelper().fillContactCreation(new ContactData("A1", "PIvanovna", "A1", "EVova", "IBA2", "Russia", "99896", "1003456789", "putin@mail.ru", "Moscow", "123", "15", "March", "1986", null), false);
         app.getContactHelper().updateSelectedContact();
         app.getNavigationHelper().gotoHomePage();
     }
