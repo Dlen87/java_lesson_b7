@@ -31,7 +31,12 @@ public class ContactHelper extends BaseHelper{
         type(By.name("address2"), contactData.getAddress2());
         type(By.name("phone2"), contactData.getPhone2());
         if (contactForm){
-           new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            try{
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            }
+            catch (NoSuchElementException ex){
+                return;
+            }
         }
         else{
             Assert.assertFalse(isElementPresent(By.name("new_group")));
@@ -59,10 +64,25 @@ public class ContactHelper extends BaseHelper{
     }
 
     public void modificationSelectedContact() {
-        click(By.xpath("(//img[@alt='Edit'])[3]"));
+        click(By.xpath("//img[@alt='Edit']"));
     }
 
     public void updateSelectedContact() {
         click(By.name("update"));
+    }
+
+    public boolean isThereAContact() {
+        return isElementPresent(By.name("selected[]"));
+    }
+
+    public void creationContact(ContactData contact) {
+        addNewContact();
+        fillContactCreation(contact, true);
+        submitContactCreation();
+        returnToHomePage();
+    }
+
+    public void returnToHomePage() {
+        click(By.linkText("home page"));
     }
 }
