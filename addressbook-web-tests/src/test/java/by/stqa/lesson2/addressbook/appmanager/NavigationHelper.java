@@ -14,9 +14,6 @@ public class NavigationHelper extends BaseHelper{
         click(By.linkText("Logout"));
     }
 
-    public void returnToHomePage() {
-        click(By.linkText("home page"));
-    }
 
     public void gotoHomePage() {
         if (isElementPresent(By.id("maintable"))){
