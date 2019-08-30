@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import java.util.List;
+
 public class GroupDeletionTests extends TestBase {
 
   @Test
@@ -14,12 +16,12 @@ public class GroupDeletionTests extends TestBase {
       app.getGroupHelper().creationGroup(new GroupData("test1", null, null));
 
     }
-    int before = app.getGroupHelper().getGroupCount();
-    app.getGroupHelper().selectGroup(before - 1);
+    List<GroupData> before = app.getGroupHelper().getGroupList();
+    app.getGroupHelper().selectGroup(before.size() - 2);
     app.getGroupHelper().deleteSelectedGroups();
     app.getGroupHelper().returnToGroupPage();
-    int after = app.getGroupHelper().getGroupCount();
-    Assert.assertEquals(after, before - 1);
+    List<GroupData> after = app.getGroupHelper().getGroupList();
+    Assert.assertEquals(after.size(), before.size() - 1);
   }
 
 
