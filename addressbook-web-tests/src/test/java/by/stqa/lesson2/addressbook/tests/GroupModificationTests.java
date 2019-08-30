@@ -1,6 +1,7 @@
 package by.stqa.lesson2.addressbook.tests;
 
 import by.stqa.lesson2.addressbook.modal.GroupData;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class GroupModificationTests extends TestBase {
@@ -11,10 +12,13 @@ public class GroupModificationTests extends TestBase {
         if (! app.getGroupHelper().isThereAGroup()){
             app.getGroupHelper().creationGroup(new GroupData("test1", null, null));
         }
+        int before = app.getGroupHelper().getGroupCount();
         app.getGroupHelper().selectGroup();
         app.getGroupHelper().modificationSelectGroup();
-        app.getGroupHelper().fillGroupForm((new GroupData("testFFFF", "test111", "testAAA")));
+        app.getGroupHelper().fillGroupForm((new GroupData("test1F", "test111", "testAAA")));
         app.getGroupHelper().updateSelectGroup();
         app.getGroupHelper().returnToGroupPage();
+        int after = app.getGroupHelper().getGroupCount();
+        Assert.assertEquals(after, before);
     }
 }
