@@ -4,8 +4,12 @@ import by.stqa.lesson2.addressbook.modal.ContactData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends BaseHelper{
 
@@ -54,8 +58,8 @@ public class ContactHelper extends BaseHelper{
         click(By.linkText("add new"));
     }
 
-    public void selectedContacts() {
-        click(By.name("selected[]"));
+    public void selectedContacts(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void deleteSelectedContacts() {
@@ -84,5 +88,35 @@ public class ContactHelper extends BaseHelper{
 
     public void returnToHomePage() {
         click(By.linkText("home page"));
+    }
+
+    public List<ContactData> getContactList() {
+        List<ContactData> contacts = new ArrayList<ContactData>();
+        String lastName = "";
+        String firstName = "";
+        int n = 0;
+       // List<WebElement> allRows = wd.findElements(By.xpath("//*[@id='maintable']//tr[@name='entry']"));
+        List<WebElement> allRows = wd.findElements(By.name("entry"));
+        for (WebElement row : allRows){
+            List<WebElement> allCells = row.findElements(By.tagName("td"));
+            for (WebElement cell : allCells){
+                if (n == 1){
+                   lastName = cell.getText();
+                }
+                else if (n == 2){
+                    firstName = cell.getText();
+                }
+                else if (n > 2){
+                    n = 0;
+                    break;
+                }
+                n++;
+
+            }
+            int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
+            ContactData contact = new ContactData( id,firstName, null, lastName, null, null, null, null, null, null, null, null, null, null, null, null);
+            contacts.add(contact);
+        }
+        return contacts;
     }
 }
