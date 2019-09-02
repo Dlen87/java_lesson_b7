@@ -18,11 +18,11 @@ public class ContactCreationTests extends TestBase {
     app.getContactHelper().creationContact(contact);
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size() + 1);
-   /* before.add(contact);
-    Comparable<? super ContactData> byId = (o1, o2) -> Integer.compare(o1.getId(), o2.getId());
+    before.add(contact);
+    Comparator<? super ContactData> byId = (d1, d2) -> Integer.compare(d1.getId(),d2.getId());
     before.sort(byId);
     after.sort(byId);
-    Assert.assertEquals(after,before);*/
+    Assert.assertEquals(after,before);
   }
 
 
