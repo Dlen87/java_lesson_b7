@@ -1,10 +1,7 @@
 package by.stqa.lesson2.addressbook.appmanager;
 
 import by.stqa.lesson2.addressbook.modal.ContactData;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
@@ -98,24 +95,29 @@ public class ContactHelper extends BaseHelper{
        // List<WebElement> allRows = wd.findElements(By.xpath("//*[@id='maintable']//tr[@name='entry']"));
         List<WebElement> allRows = wd.findElements(By.name("entry"));
         for (WebElement row : allRows){
-            List<WebElement> allCells = row.findElements(By.tagName("td"));
-            for (WebElement cell : allCells){
-                if (n == 1){
-                   lastName = cell.getText();
-                }
-                else if (n == 2){
-                    firstName = cell.getText();
-                }
-                else if (n > 2){
-                    n = 0;
-                    break;
-                }
-                n++;
+           try {
+               List<WebElement> allCells = row.findElements(By.tagName("td"));
+               for (WebElement cell : allCells){
+                   if (n == 1){
+                       lastName = cell.getText();
+                   }
+                   else if (n == 2){
+                       firstName = cell.getText();
+                   }
+                   else if (n > 2){
+                       n = 0;
+                       break;
+                   }
+                   n++;
 
-            }
-            int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
-            ContactData contact = new ContactData( id,firstName, null, lastName, null, null, null, null, null, null, null, null, null, null, null, null);
-            contacts.add(contact);
+               }
+               int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
+               ContactData contact = new ContactData( id,firstName, null, lastName, null, null, null, null, null, null, null, null, null, null, null, null);
+               contacts.add(contact);
+           }
+           catch (StaleElementReferenceException e){
+               e.getMessage();
+           }
         }
         return contacts;
     }
