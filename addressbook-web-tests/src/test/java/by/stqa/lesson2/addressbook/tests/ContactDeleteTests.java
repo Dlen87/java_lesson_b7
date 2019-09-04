@@ -22,7 +22,7 @@ public class ContactDeleteTests extends TestBase{
    // Assert.assertEquals(after.size(), before.size() - 1);
     before.remove(before.size() - 1);
     Thread.sleep(150); // время для удаления элемента из списка
-    Assert.assertEquals(before,after);
+    Assert.assertEquals(after, before);
   }
 
 

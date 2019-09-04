@@ -96,6 +96,7 @@ public class ContactHelper extends BaseHelper{
         List<WebElement> allRows = wd.findElements(By.name("entry"));
         for (WebElement row : allRows){
            try {
+               System.out.println("row -> " + row.getText());
                List<WebElement> allCells = row.findElements(By.tagName("td"));
                for (WebElement cell : allCells){
                    if (n == 1){
@@ -112,6 +113,7 @@ public class ContactHelper extends BaseHelper{
 
                }
                int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
+               System.out.println("id = " + id);
                ContactData contact = new ContactData( id,firstName, null, lastName, null, null, null, null, null, null, null, null, null, null, null, null);
                contacts.add(contact);
            }
