@@ -19,7 +19,6 @@ public class ContactHelper extends BaseHelper{
     }
 
     public void fillContactCreation(ContactData contactData, boolean contactForm) {
-        System.out.println("***** Edit id = " + contactData.getId());
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("middlename"), contactData.getMiddlename());
         type(By.name("lastname"), contactData.getLastname());
@@ -32,7 +31,6 @@ public class ContactHelper extends BaseHelper{
         wasBornUser(contactData.getBday(), contactData.getBmonth(), contactData.getByear());
         type(By.name("address2"), contactData.getAddress2());
         type(By.name("phone2"), contactData.getPhone2());
-        System.out.println("------- Edit id = " + contactData.getId());
         if (contactForm){
             try{
                 new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
@@ -44,8 +42,6 @@ public class ContactHelper extends BaseHelper{
         else{
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
-        System.out.println("------- Edit id = " + contactData.getId());
-
     }
 
     private void wasBornUser(String bday, String bmonth, String byear) {
@@ -67,8 +63,8 @@ public class ContactHelper extends BaseHelper{
         wd.switchTo().alert().accept();
     }
 
-    public void modificationSelectedContact() {
-        click(By.xpath("//img[@alt='Edit']"));
+    public void modificationSelectedContact(int index) {
+        click(By.xpath("//a[@href='edit.php?id="+ index +"']"));
     }
 
     public void updateSelectedContact() {
@@ -95,11 +91,9 @@ public class ContactHelper extends BaseHelper{
         String lastName = "";
         String firstName = "";
         int n = 0;
-       // List<WebElement> allRows = wd.findElements(By.xpath("//*[@id='maintable']//tr[@name='entry']"));
         List<WebElement> allRows = wd.findElements(By.name("entry"));
         for (WebElement row : allRows){
            try {
-               System.out.println("row -> " + row.getText());
                List<WebElement> allCells = row.findElements(By.tagName("td"));
                for (WebElement cell : allCells){
                    if (n == 1){
@@ -116,7 +110,6 @@ public class ContactHelper extends BaseHelper{
 
                }
                int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
-               System.out.println("id = " + id);
                ContactData contact = new ContactData( id,firstName, null, lastName, null, null, null, null, null, null, null, null, null, null, null, null);
                contacts.add(contact);
            }
