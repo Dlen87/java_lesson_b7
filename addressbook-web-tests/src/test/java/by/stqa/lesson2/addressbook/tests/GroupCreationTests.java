@@ -11,7 +11,7 @@ import java.util.List;
 
 public class GroupCreationTests extends TestBase {
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testGroupCreation() throws Exception {
         app.goTo().groupPage();
         List<GroupData> before = app.group().list();
