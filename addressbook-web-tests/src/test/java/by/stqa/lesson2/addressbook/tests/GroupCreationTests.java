@@ -5,20 +5,19 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 //import static jdk.vm.ci.sparc.SPARC.o1;
 
 public class GroupCreationTests extends TestBase {
 
-    @Test
+    @Test(enabled = false)
     public void testGroupCreation() throws Exception {
-        app.getNavigationHelper().gotoGroupPage();
-        List<GroupData> before = app.getGroupHelper().getGroupList();
+        app.goTo().groupPage();
+        List<GroupData> before = app.group().list();
         GroupData group = new GroupData("test879", null, null);
-        app.getGroupHelper().creationGroup(group);
-        List<GroupData> after = app.getGroupHelper().getGroupList();
+        app.group().cretion(group);
+        List<GroupData> after = app.group().list();
         //Assert.assertEquals(after.size(), before.size() + 1);
         before.add(group);
         Comparator<? super GroupData> byId =  (o1, o2) -> Integer.compare(o1.getId(), o2.getId());

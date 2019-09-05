@@ -63,6 +63,27 @@ public class ContactHelper extends BaseHelper{
         wd.switchTo().alert().accept();
     }
 
+    public void delete(int idSelect) {
+        selectedContacts(idSelect);
+        deleteSelectedContacts();
+    }
+
+    public void cretion(ContactData contact) {
+        addNewContact();
+        fillContactCreation(contact, true);
+        submitContactCreation();
+        returnToHomePage();
+    }
+
+    public void modify(int contSelect, int idEdit, ContactData contact) {
+        selectedContacts(contSelect);
+        modificationSelectedContact(idEdit);
+        fillContactCreation(contact, false);
+        updateSelectedContact();
+        returnToHomePage();
+    }
+
+
     public void modificationSelectedContact(int index) {
         click(By.xpath("//a[@href='edit.php?id="+ index +"']"));
     }
@@ -75,18 +96,11 @@ public class ContactHelper extends BaseHelper{
         return isElementPresent(By.name("selected[]"));
     }
 
-    public void creationContact(ContactData contact) {
-        addNewContact();
-        fillContactCreation(contact, true);
-        submitContactCreation();
-        returnToHomePage();
-    }
-
     public void returnToHomePage() {
         click(By.linkText("home page"));
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<ContactData>();
         String lastName = "";
         String firstName = "";

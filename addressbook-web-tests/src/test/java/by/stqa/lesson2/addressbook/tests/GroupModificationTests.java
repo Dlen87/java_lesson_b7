@@ -6,26 +6,25 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class GroupModificationTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions(){
-        app.getNavigationHelper().gotoGroupPage();
-        if (!app.getGroupHelper().isThereAGroup()) {
-            app.getGroupHelper().creationGroup(new GroupData("test1", null, null));
+        app.goTo().groupPage();
+        if (app.group().list().size() == 0) {
+            app.group().cretion(new GroupData("test1", null, null));
         }
     }
 
-    @Test
+    @Test(enabled = false)
     public void testGroupModification() {
-        List<GroupData> before = app.getGroupHelper().getGroupList();
+        List<GroupData> before = app.group().list();
         int idSelect = before.size() - 2;
         GroupData group = new GroupData(before.get(idSelect).getId(), "test132", null, null);
-        app.getGroupHelper().modifyGroup(idSelect, group);
-        List<GroupData> after = app.getGroupHelper().getGroupList();
+        app.group().modify(idSelect, group);
+        List<GroupData> after = app.group().list();
         //  Assert.assertEquals(after.size(), before.size());
         before.remove(idSelect);
         before.add(group);
