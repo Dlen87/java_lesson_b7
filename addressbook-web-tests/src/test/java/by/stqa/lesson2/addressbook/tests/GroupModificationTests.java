@@ -2,6 +2,7 @@ package by.stqa.lesson2.addressbook.tests;
 
 import by.stqa.lesson2.addressbook.modal.GroupData;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Comparator;
@@ -10,23 +11,23 @@ import java.util.List;
 
 public class GroupModificationTests extends TestBase {
 
-    @Test
-    public void testGroupModification(){
+    @BeforeMethod
+    public void ensurePreconditions(){
         app.getNavigationHelper().gotoGroupPage();
-        if (! app.getGroupHelper().isThereAGroup()){
+        if (!app.getGroupHelper().isThereAGroup()) {
             app.getGroupHelper().creationGroup(new GroupData("test1", null, null));
         }
-        List<GroupData> before = app.getGroupHelper().getGroupList();
-        app.getGroupHelper().selectGroup(before.size() - 2);
-        app.getGroupHelper().modificationSelectGroup();
-        GroupData group = new GroupData(before.get(before.size() - 2).getId(),"test132", null, null);
-        app.getGroupHelper().fillGroupForm(group);
-        app.getGroupHelper().updateSelectGroup();
-        app.getGroupHelper().returnToGroupPage();
+    }
 
-        List<GroupData>  after = app.getGroupHelper().getGroupList();
-      //  Assert.assertEquals(after.size(), before.size());
-        before.remove(before.size() - 2);
+    @Test
+    public void testGroupModification() {
+        List<GroupData> before = app.getGroupHelper().getGroupList();
+        int idSelect = before.size() - 2;
+        GroupData group = new GroupData(before.get(idSelect).getId(), "test132", null, null);
+        app.getGroupHelper().modifyGroup(idSelect, group);
+        List<GroupData> after = app.getGroupHelper().getGroupList();
+        //  Assert.assertEquals(after.size(), before.size());
+        before.remove(idSelect);
         before.add(group);
         Comparator<? super GroupData> byId = (o1, o2) -> Integer.compare(o1.getId(), o2.getId());
         before.sort(byId);
@@ -34,3 +35,4 @@ public class GroupModificationTests extends TestBase {
         Assert.assertEquals(after, before);
     }
 }
+
