@@ -19,6 +19,7 @@ public class ContactHelper extends BaseHelper{
     }
 
     public void fillContactCreation(ContactData contactData, boolean contactForm) {
+        System.out.println("***** Edit id = " + contactData.getId());
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("middlename"), contactData.getMiddlename());
         type(By.name("lastname"), contactData.getLastname());
@@ -31,6 +32,7 @@ public class ContactHelper extends BaseHelper{
         wasBornUser(contactData.getBday(), contactData.getBmonth(), contactData.getByear());
         type(By.name("address2"), contactData.getAddress2());
         type(By.name("phone2"), contactData.getPhone2());
+        System.out.println("------- Edit id = " + contactData.getId());
         if (contactForm){
             try{
                 new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
@@ -42,6 +44,7 @@ public class ContactHelper extends BaseHelper{
         else{
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
+        System.out.println("------- Edit id = " + contactData.getId());
 
     }
 
