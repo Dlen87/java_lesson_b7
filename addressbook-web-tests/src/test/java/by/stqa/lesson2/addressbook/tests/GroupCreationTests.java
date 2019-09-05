@@ -11,11 +11,11 @@ import java.util.List;
 
 public class GroupCreationTests extends TestBase {
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testGroupCreation() throws Exception {
         app.goTo().groupPage();
         List<GroupData> before = app.group().list();
-        GroupData group = new GroupData("test879", null, null);
+        GroupData group = new GroupData().withName("test879");
         app.group().cretion(group);
         List<GroupData> after = app.group().list();
         //Assert.assertEquals(after.size(), before.size() + 1);
