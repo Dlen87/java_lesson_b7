@@ -28,8 +28,6 @@ public class ContactDeleteTests extends TestBase{
     List<ContactData> before = app.contact().list();
     int idSelect = before.size() - 1;
     app.contact().delete(idSelect);
-    Thread.sleep(200); // время для удаления контакта
-    app.goTo().homePage();
     List<ContactData> after = app.contact().list();
    // Assert.assertEquals(after.size(), before.size() - 1);
     before.remove(idSelect);

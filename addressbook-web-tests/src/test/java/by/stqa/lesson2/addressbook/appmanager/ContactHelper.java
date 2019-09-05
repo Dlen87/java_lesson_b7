@@ -59,6 +59,12 @@ public class ContactHelper extends BaseHelper{
     public void deleteSelectedContacts() {
         click(By.xpath("//input[@value='Delete']"));
         wd.switchTo().alert().accept();
+        try{
+            wd.findElement(By.cssSelector("div.msgbox"));
+        }
+        catch (NoSuchElementException e){
+            return;
+        }
     }
 
     public void delete(int idSelect) {
