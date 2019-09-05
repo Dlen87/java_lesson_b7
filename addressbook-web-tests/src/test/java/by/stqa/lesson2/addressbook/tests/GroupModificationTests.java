@@ -18,7 +18,7 @@ public class GroupModificationTests extends TestBase {
         }
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void testGroupModification() {
         List<GroupData> before = app.group().list();
         int idSelect = before.size() - 2;

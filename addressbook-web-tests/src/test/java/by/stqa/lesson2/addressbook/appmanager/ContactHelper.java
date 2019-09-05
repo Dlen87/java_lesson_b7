@@ -29,8 +29,6 @@ public class ContactHelper extends BaseHelper{
         type(By.name("mobile"), contactData.getMobile());
         type(By.name("email"), contactData.getEmail());
         wasBornUser(contactData.getBday(), contactData.getBmonth(), contactData.getByear());
-        type(By.name("address2"), contactData.getAddress2());
-        type(By.name("phone2"), contactData.getPhone2());
         if (contactForm){
             try{
                 new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
@@ -124,8 +122,7 @@ public class ContactHelper extends BaseHelper{
 
                }
                int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
-               ContactData contact = new ContactData( id,firstName, null, lastName, null, null, null, null, null, null, null, null, null, null, null, null);
-               contacts.add(contact);
+               contacts.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
            }
            catch (StaleElementReferenceException e){
                e.getMessage();
