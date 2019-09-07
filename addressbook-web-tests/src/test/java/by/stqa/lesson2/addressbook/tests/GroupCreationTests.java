@@ -1,29 +1,32 @@
 package by.stqa.lesson2.addressbook.tests;
 
 import by.stqa.lesson2.addressbook.modal.GroupData;
+import by.stqa.lesson2.addressbook.modal.Groups;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
-//import static jdk.vm.ci.sparc.SPARC.o1;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.testng.Assert.*;
+
 
 public class GroupCreationTests extends TestBase {
 
     @Test(enabled = true)
     public void testGroupCreation() throws Exception {
         app.goTo().groupPage();
-        List<GroupData> before = app.group().list();
-        GroupData group = new GroupData().withName("test879");
+        Groups before = app.group().all();
+        GroupData group = new GroupData().withName("test779");
         app.group().cretion(group);
-        List<GroupData> after = app.group().list();
-        //Assert.assertEquals(after.size(), before.size() + 1);
-        before.add(group);
-        Comparator<? super GroupData> byId =  (o1, o2) -> Integer.compare(o1.getId(), o2.getId());
-        before.sort(byId);
-        after.sort(byId);
-        Assert.assertEquals(after,before);
+        Groups after = app.group().all();
+        assertThat(after, equalTo(
+                before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
 
     }
 

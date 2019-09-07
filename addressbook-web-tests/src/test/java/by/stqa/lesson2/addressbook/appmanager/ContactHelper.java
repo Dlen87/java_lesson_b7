@@ -1,12 +1,15 @@
 package by.stqa.lesson2.addressbook.appmanager;
 
 import by.stqa.lesson2.addressbook.modal.ContactData;
+import by.stqa.lesson2.addressbook.modal.Contacts;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends BaseHelper{
 
@@ -56,6 +59,10 @@ public class ContactHelper extends BaseHelper{
         wd.findElements(By.name("selected[]")).get(index).click();
     }
 
+    private void selectedContactsById(int id) {
+        wd.findElement(By.cssSelector("input[value='"+ id +"']")).click();
+    }
+
     public void deleteSelectedContacts() {
         click(By.xpath("//input[@value='Delete']"));
         wd.switchTo().alert().accept();
@@ -69,6 +76,11 @@ public class ContactHelper extends BaseHelper{
 
     public void delete(int idSelect) {
         selectedContacts(idSelect);
+        deleteSelectedContacts();
+    }
+
+    public void delete(ContactData contact) {
+        selectedContactsById(contact.getId());
         deleteSelectedContacts();
     }
 
@@ -87,6 +99,13 @@ public class ContactHelper extends BaseHelper{
         returnToHomePage();
     }
 
+    public void modify(ContactData contact) {
+        selectedContactsById(contact.getId());
+        modificationSelectedContact(contact.getId());
+        fillContactCreation(contact, false);
+        updateSelectedContact();
+        returnToHomePage();
+    }
 
     public void modificationSelectedContact(int index) {
         click(By.xpath("//a[@href='edit.php?id="+ index +"']"));
@@ -136,4 +155,39 @@ public class ContactHelper extends BaseHelper{
         }
         return contacts;
     }
+
+    public Contacts all() {
+        Contacts contacts = new Contacts();
+        String lastName = "";
+        String firstName = "";
+        int n = 0;
+        List<WebElement> allRows = wd.findElements(By.name("entry"));
+        for (WebElement row : allRows){
+            try {
+                List<WebElement> allCells = row.findElements(By.tagName("td"));
+                for (WebElement cell : allCells){
+                    if (n == 1){
+                        lastName = cell.getText();
+                    }
+                    else if (n == 2){
+                        firstName = cell.getText();
+                    }
+                    else if (n > 2){
+                        n = 0;
+                        break;
+                    }
+                    n++;
+
+                }
+                int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
+                contacts.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
+            }
+            catch (StaleElementReferenceException e){
+                e.getMessage();
+            }
+        }
+        return contacts;
+    }
+
+
 }

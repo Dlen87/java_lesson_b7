@@ -1,10 +1,18 @@
 package by.stqa.lesson2.addressbook.tests;
 
 import by.stqa.lesson2.addressbook.modal.GroupData;
+import by.stqa.lesson2.addressbook.modal.Groups;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.List;
+import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class GroupDeletionTests extends TestBase {
 
@@ -18,13 +26,12 @@ public class GroupDeletionTests extends TestBase {
 
   @Test(enabled = true)
   public void testGroupDeletion() throws Exception {
-    List<GroupData> before = app.group().list();
-    int idSelect = before.size() - 2;
-    app.group().delete(idSelect);
-    List<GroupData> after = app.group().list();
-   // Assert.assertEquals(after.size(), before.size() - 1);
-    before.remove(idSelect);
-    Assert.assertEquals(after,before);
+    Groups before = app.group().all();
+    GroupData deletedGroup = before.iterator().next();
+    app.group().delete(deletedGroup);
+    Set<GroupData> after = app.group().all();
+    assertEquals(after.size(), before.size() - 1);
+    assertThat(after, equalTo(before.withOut(deletedGroup)));
   }
 
 
