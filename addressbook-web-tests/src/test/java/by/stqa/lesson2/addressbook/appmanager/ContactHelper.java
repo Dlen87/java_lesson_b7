@@ -13,6 +13,8 @@ import java.util.Set;
 
 public class ContactHelper extends BaseHelper{
 
+    private Contacts contactCache = null;
+
     public ContactHelper(WebDriver wd) {
         super(wd);
     }
@@ -82,12 +84,14 @@ public class ContactHelper extends BaseHelper{
     public void delete(ContactData contact) {
         selectedContactsById(contact.getId());
         deleteSelectedContacts();
+        contactCache = null;
     }
 
     public void cretion(ContactData contact) {
         addNewContact();
         fillContactCreation(contact, true);
         submitContactCreation();
+        contactCache = null;
         returnToHomePage();
     }
 
@@ -104,6 +108,7 @@ public class ContactHelper extends BaseHelper{
         modificationSelectedContact(contact.getId());
         fillContactCreation(contact, false);
         updateSelectedContact();
+        contactCache = null;
         returnToHomePage();
     }
 
@@ -157,7 +162,11 @@ public class ContactHelper extends BaseHelper{
     }
 
     public Contacts all() {
-        Contacts contacts = new Contacts();
+        if (contactCache != null){
+            return new Contacts(contactCache);
+        }
+
+        contactCache = new Contacts();
         String lastName = "";
         String firstName = "";
         int n = 0;
@@ -180,13 +189,13 @@ public class ContactHelper extends BaseHelper{
 
                 }
                 int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
-                contacts.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
+                contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
             }
             catch (StaleElementReferenceException e){
                 e.getMessage();
             }
         }
-        return contacts;
+        return new Contacts(contactCache);
     }
 
 

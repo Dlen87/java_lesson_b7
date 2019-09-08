@@ -22,11 +22,11 @@ public class GroupCreationTests extends TestBase {
     public void testGroupCreation() throws Exception {
         app.goTo().groupPage();
         Groups before = app.group().all();
-        GroupData group = new GroupData().withName("test779");
+        GroupData group = new GroupData().withName("test100");
         app.group().cretion(group);
         Groups after = app.group().all();
         assertThat(after, equalTo(
-                before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+               before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
 
     }
 
