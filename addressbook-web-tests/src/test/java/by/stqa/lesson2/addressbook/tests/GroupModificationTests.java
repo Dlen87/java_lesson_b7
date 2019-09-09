@@ -7,21 +7,15 @@ import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.*;
-import static org.testng.Assert.assertEquals;
 
 public class GroupModificationTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions(){
         app.goTo().groupPage();
-        if (app.group().list().size() == 0) {
+        if (app.group().all().size() == 0) {
             app.group().cretion(new GroupData().withName("test1"));
         }
     }
@@ -33,8 +27,8 @@ public class GroupModificationTests extends TestBase {
         GroupData group = new GroupData()
                 .withId(modifiedGroup.getId()).withName("test99992");
         app.group().modify(group);
-        Set<GroupData> after = app.group().all();
-        assertEquals(after.size(), before.size());
+        assertThat(app.group().count(), equalTo(before.size()));
+        Groups after = app.group().all();
         assertThat(after, equalTo(before.withOut(modifiedGroup).withAdded(group)));
     }
 }

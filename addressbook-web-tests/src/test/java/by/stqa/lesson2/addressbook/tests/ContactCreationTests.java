@@ -2,17 +2,10 @@ package by.stqa.lesson2.addressbook.tests;
 
 import by.stqa.lesson2.addressbook.modal.ContactData;
 import by.stqa.lesson2.addressbook.modal.Contacts;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.List;
-import java.util.Comparator;
-import java.util.Set;
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
 
 public class ContactCreationTests extends TestBase {

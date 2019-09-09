@@ -6,10 +6,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends BaseHelper{
 
@@ -76,11 +73,6 @@ public class ContactHelper extends BaseHelper{
         }
     }
 
-    public void delete(int idSelect) {
-        selectedContacts(idSelect);
-        deleteSelectedContacts();
-    }
-
     public void delete(ContactData contact) {
         selectedContactsById(contact.getId());
         deleteSelectedContacts();
@@ -92,14 +84,6 @@ public class ContactHelper extends BaseHelper{
         fillContactCreation(contact, true);
         submitContactCreation();
         contactCache = null;
-        returnToHomePage();
-    }
-
-    public void modify(int contSelect, int idEdit, ContactData contact) {
-        selectedContacts(contSelect);
-        modificationSelectedContact(idEdit);
-        fillContactCreation(contact, false);
-        updateSelectedContact();
         returnToHomePage();
     }
 
@@ -128,24 +112,6 @@ public class ContactHelper extends BaseHelper{
         click(By.linkText("home page"));
     }
 
-    public List<ContactData> list() {
-        List<ContactData> contacts = new ArrayList<ContactData>();
-        List<WebElement> allRows = wd.findElements(By.name("entry"));
-        for (WebElement row : allRows){
-           try {
-               List<WebElement> allCells = row.findElements(By.tagName("td"));
-               String lastName = allCells.get(1).getText();
-               String firstName = allCells.get(2).getText();
-               int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
-               contacts.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
-           }
-           catch (StaleElementReferenceException e){
-               e.getMessage();
-           }
-        }
-        return contacts;
-    }
-
     public Contacts all() {
         if (contactCache != null){
             return new Contacts(contactCache);
@@ -157,10 +123,12 @@ public class ContactHelper extends BaseHelper{
                 List<WebElement> allCells = row.findElements(By.tagName("td"));
                 String lastName = allCells.get(1).getText();
                 String firstName = allCells.get(2).getText();
+                String address = allCells.get(3).getText();
+                String allEmails = allCells.get(4).getText();
                 String allPhones = allCells.get(5).getText();
                 int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
                 contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName)
-                        .withAllPhones(allPhones));
+                        .withAddress(address).withAllPhones(allPhones).withAllemails(allEmails));
             }
             catch (StaleElementReferenceException e){
                 e.getMessage();
@@ -168,7 +136,6 @@ public class ContactHelper extends BaseHelper{
         }
         return new Contacts(contactCache);
     }
-
 
     public void initContactModificationById(int id) {
 
@@ -183,8 +150,14 @@ public class ContactHelper extends BaseHelper{
         String home = wd.findElement(By.name("home")).getAttribute("value");
         String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
         String work = wd.findElement(By.name("work")).getAttribute("value");
+        String address = wd.findElement(By.name("address")).getText();
+        String email = wd.findElement(By.name("email")).getAttribute("value");
+        String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+        String email3 = wd.findElement(By.name("email3")).getAttribute("value");
         wd.navigate().back();
         return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname)
-                .withHomephone(home).withMobile(mobile).withWorkphone(work);
+                .withHomephone(home).withMobile(mobile).withWorkphone(work)
+                .withEmail(email).withEmail2(email2).withEmail3(email3)
+                .withAddress(address);
     }
 }

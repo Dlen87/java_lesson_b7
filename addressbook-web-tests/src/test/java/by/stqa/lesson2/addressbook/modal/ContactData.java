@@ -14,22 +14,35 @@ public class ContactData {
     private String mobile;
     private String work;
     private String email;
+    private String email2;
+    private String email3;
     private String bday;
     private String bmonth;
     private String byear;
     private String group;
+    private String allphones;
+    private String allemails;
 
-    public String getAllphones() {
-        return allphones;
+
+    public ContactData withAllemails(String allemails) {
+        this.allemails = allemails;
+        return this;
+    }
+
+    public ContactData withEmail2(String email2) {
+        this.email2 = email2;
+        return this;
+    }
+
+    public ContactData withEmail3(String email3) {
+        this.email3 = email3;
+        return this;
     }
 
     public ContactData withAllPhones(String allphones) {
         this.allphones = allphones;
         return this;
     }
-
-    private String allphones;
-
 
     public ContactData withId(int id) {
         this.id = id;
@@ -104,6 +117,22 @@ public class ContactData {
     public ContactData withWorkphone(String work) {
         this.work = work;
         return this;
+    }
+
+    public String getAllemails() {
+        return allemails;
+    }
+
+    public String getEmail3() {
+        return email3;
+    }
+
+    public String getAllphones() {
+        return allphones;
+    }
+
+    public String getEmail2() {
+        return email2;
     }
 
     public String getWork() {

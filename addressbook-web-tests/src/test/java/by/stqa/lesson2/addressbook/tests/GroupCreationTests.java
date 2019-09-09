@@ -2,18 +2,10 @@ package by.stqa.lesson2.addressbook.tests;
 
 import by.stqa.lesson2.addressbook.modal.GroupData;
 import by.stqa.lesson2.addressbook.modal.Groups;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import static org.testng.Assert.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 public class GroupCreationTests extends TestBase {
@@ -30,5 +22,17 @@ public class GroupCreationTests extends TestBase {
 
     }
 
+    @Test(enabled = false)
+    public void testBadGroupCreation() throws Exception {
+        app.goTo().groupPage();
+        Groups before = app.group().all();
+        GroupData group = new GroupData().withName("test'");
+        app.group().cretion(group);
+        assertThat(app.group().count(), equalTo(before.size() + 1));
+        Groups after = app.group().all();
+        assertThat(after, equalTo(
+                before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+
+    }
 
 }

@@ -2,15 +2,8 @@ package by.stqa.lesson2.addressbook.tests;
 
 import by.stqa.lesson2.addressbook.modal.ContactData;
 import by.stqa.lesson2.addressbook.modal.Contacts;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,7 +14,7 @@ public class ContactModificationTests extends TestBase {
     @BeforeMethod
     public void ensurePrecondition(){
         app.goTo().homePage();
-        if (app.contact().list().size() == 0){
+        if (app.contact().all().size() == 0){
             app.contact().cretion(new ContactData()
                     .withFirstname("Anna").withMiddlename("Ivanovna").withLastname("Dunian")
                     .withNickname("Kat").withCompany("IBA2").withAddress("Russia")
