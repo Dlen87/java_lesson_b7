@@ -12,11 +12,23 @@ public class ContactData {
     private String address;
     private String homephone;
     private String mobile;
+    private String work;
     private String email;
     private String bday;
     private String bmonth;
     private String byear;
     private String group;
+
+    public String getAllphones() {
+        return allphones;
+    }
+
+    public ContactData withAllPhones(String allphones) {
+        this.allphones = allphones;
+        return this;
+    }
+
+    private String allphones;
 
 
     public ContactData withId(int id) {
@@ -89,6 +101,15 @@ public class ContactData {
         return this;
     }
 
+    public ContactData withWorkphone(String work) {
+        this.work = work;
+        return this;
+    }
+
+    public String getWork() {
+        return work;
+    }
+
     public int getId() {
         return id;
     }
@@ -151,12 +172,13 @@ public class ContactData {
         if (o == null || getClass() != o.getClass()) return false;
         ContactData that = (ContactData) o;
         return id == that.id &&
+                Objects.equals(firstname, that.firstname) &&
                 Objects.equals(lastname, that.lastname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, lastname);
+        return Objects.hash(id, firstname, lastname);
     }
 
     @Override
@@ -167,4 +189,6 @@ public class ContactData {
                 ", lastname='" + lastname + '\'' +
                 '}';
     }
+
+
 }
