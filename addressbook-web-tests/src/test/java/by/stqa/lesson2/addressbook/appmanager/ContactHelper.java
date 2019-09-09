@@ -130,27 +130,12 @@ public class ContactHelper extends BaseHelper{
 
     public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<ContactData>();
-        String lastName = "";
-        String firstName = "";
-        int n = 0;
         List<WebElement> allRows = wd.findElements(By.name("entry"));
         for (WebElement row : allRows){
            try {
                List<WebElement> allCells = row.findElements(By.tagName("td"));
-               for (WebElement cell : allCells){
-                   if (n == 1){
-                       lastName = cell.getText();
-                   }
-                   else if (n == 2){
-                       firstName = cell.getText();
-                   }
-                   else if (n > 2){
-                       n = 0;
-                       break;
-                   }
-                   n++;
-
-               }
+               String lastName = allCells.get(1).getText();
+               String firstName = allCells.get(2).getText();
                int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
                contacts.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
            }
@@ -165,31 +150,17 @@ public class ContactHelper extends BaseHelper{
         if (contactCache != null){
             return new Contacts(contactCache);
         }
-
         contactCache = new Contacts();
-        String lastName = "";
-        String firstName = "";
-        int n = 0;
         List<WebElement> allRows = wd.findElements(By.name("entry"));
         for (WebElement row : allRows){
             try {
                 List<WebElement> allCells = row.findElements(By.tagName("td"));
-                for (WebElement cell : allCells){
-                    if (n == 1){
-                        lastName = cell.getText();
-                    }
-                    else if (n == 2){
-                        firstName = cell.getText();
-                    }
-                    else if (n > 2){
-                        n = 0;
-                        break;
-                    }
-                    n++;
-
-                }
+                String lastName = allCells.get(1).getText();
+                String firstName = allCells.get(2).getText();
+                String allPhones = allCells.get(5).getText();
                 int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
-                contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
+                contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName)
+                        .withAllPhones(allPhones));
             }
             catch (StaleElementReferenceException e){
                 e.getMessage();
@@ -199,4 +170,21 @@ public class ContactHelper extends BaseHelper{
     }
 
 
+    public void initContactModificationById(int id) {
+
+        wd.findElement(By.xpath(String.format("//a[@href='edit.php?id=%s']", id))).click();
+
+    }
+
+    public ContactData infoFromEditForm(ContactData contact) {
+        initContactModificationById(contact.getId());
+        String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
+        String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
+        String home = wd.findElement(By.name("home")).getAttribute("value");
+        String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
+        String work = wd.findElement(By.name("work")).getAttribute("value");
+        wd.navigate().back();
+        return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname)
+                .withHomephone(home).withMobile(mobile).withWorkphone(work);
+    }
 }
