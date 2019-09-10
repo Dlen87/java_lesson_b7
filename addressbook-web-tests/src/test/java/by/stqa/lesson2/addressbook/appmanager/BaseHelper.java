@@ -5,6 +5,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import java.io.File;
+
 public class BaseHelper {
     protected WebDriver wd;
 
@@ -26,7 +28,11 @@ public class BaseHelper {
             }
         }
     }
-
+    protected void attach(By locator, File photo) {
+        if (photo != null) {
+                wd.findElement(locator).sendKeys(photo.getAbsolutePath());
+        }
+    }
 
     protected void typeSelect(String bday, By locator) {
         wd.findElement(locator).click();

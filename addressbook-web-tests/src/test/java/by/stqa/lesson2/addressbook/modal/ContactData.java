@@ -1,5 +1,6 @@
 package by.stqa.lesson2.addressbook.modal;
 
+import java.io.File;
 import java.util.Objects;
 
 public class ContactData {
@@ -22,7 +23,14 @@ public class ContactData {
     private String group;
     private String allphones;
     private String allemails;
+    private File photo;
 
+
+
+    public ContactData withPhoto(File photo) {
+        this.photo = photo;
+        return this;
+    }
 
     public ContactData withAllemails(String allemails) {
         this.allemails = allemails;
@@ -117,6 +125,9 @@ public class ContactData {
     public ContactData withWorkphone(String work) {
         this.work = work;
         return this;
+    }
+    public File getPhoto() {
+        return photo;
     }
 
     public String getAllemails() {

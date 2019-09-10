@@ -30,6 +30,7 @@ public class ContactHelper extends BaseHelper{
         type(By.name("home"), contactData.getHomephone());
         type(By.name("mobile"), contactData.getMobile());
         type(By.name("email"), contactData.getEmail());
+        attach(By.name("photo"), contactData.getPhoto());
         wasBornUser(contactData.getBday(), contactData.getBmonth(), contactData.getByear());
         if (contactForm){
             try{
