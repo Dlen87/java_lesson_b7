@@ -5,7 +5,7 @@ import by.stqa.lesson2.addressbook.modal.Contacts;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -17,17 +17,22 @@ import static org.testng.Assert.assertEquals;
 public class ContactCreationTests extends TestBase {
 
   @DataProvider
-  public Iterator<Object[]> validContacts(){
+  public Iterator<Object[]> validContacts() throws IOException {
     List<Object[]> list = new ArrayList<Object[]>();
-    File photo = new File("src/test/resources/foto.jpg");
-    list.add(new Object[]{new ContactData() .withFirstname("TInna").withLastname("TCoco")
-            .withHomephone("19-89-06").withMobile("+375(29)1456789").withEmail("ukan1@mail.ru")
-            .withAddress("USA, Chicago, Vovetckaia,2-48").withPhoto(photo)
-            .withBday("25").withBmonth("April").withByear("1981").withGroup("Group1")});
-    list.add(new Object[]{new ContactData() .withFirstname("ATInna").withLastname("ATCoco")
-            .withHomephone("29-89-06").withMobile("+375(29)2456789").withEmail("ukan2@mail.ru")
-            .withAddress("USA, Chicago, Vovetckaia,3-48").withPhoto(photo)
-            .withBday("22").withBmonth("April").withByear("1982").withGroup("Group1")});
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.csv")));
+    String line = reader.readLine();
+    while (line != null){
+      String[] split = line.split(";");
+      list.add(new Object[]{new ContactData().withLastname(split[0].replaceFirst(" ", ""))
+              .withFirstname(split[1].replaceFirst(" ", ""))
+              .withMobile(split[2]).withEmail(split[3])
+              .withAddress(split[4])
+              .withBday(split[5].replaceFirst(" ",""))
+              .withBmonth(split[6].replaceFirst(" ",""))
+              .withByear(split[7].replaceFirst(" ",""))
+              .withGroup(split[8].replaceFirst(" ",""))});
+      line = reader.readLine();
+    }
     return list.iterator();
   }
 
