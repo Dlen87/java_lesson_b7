@@ -2,7 +2,12 @@ package by.stqa.lesson2.addressbook.tests;
 
 import by.stqa.lesson2.addressbook.modal.GroupData;
 import by.stqa.lesson2.addressbook.modal.Groups;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -10,11 +15,18 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTests extends TestBase {
 
-    @Test(enabled = true)
-    public void testGroupCreation() throws Exception {
+    @DataProvider
+    public Iterator<Object[]> validGroups(){
+        List<Object[]> list = new ArrayList<Object[]>();
+        list.add(new Object[]{new GroupData().withName("test2").withHeader("header 2").withFooter("footer 2")});
+        list.add(new Object[]{new GroupData().withName("test3").withHeader("header 3").withFooter("footer 3")});
+        return list.iterator();
+    }
+
+    @Test(dataProvider = "validGroups")
+    public void testGroupCreation(GroupData group) throws Exception {
         app.goTo().groupPage();
         Groups before = app.group().all();
-        GroupData group = new GroupData().withName("test100");
         app.group().cretion(group);
         Groups after = app.group().all();
         assertThat(after, equalTo(
