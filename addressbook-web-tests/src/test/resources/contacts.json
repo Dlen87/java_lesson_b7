@@ -1,0 +1,26 @@
+[
+  {
+    "firstname": "Ivan_0",
+    "lastname": "Ivanov_0",
+    "address": "Address_0",
+    "homephone": "11 11 10",
+    "mobile": "+375 (29) 111 11 10",
+    "email": "email_0@mail.ru",
+    "email2": "email2_0@mail.ru",
+    "bday": "1",
+    "bmonth": "September",
+    "byear": "1980"
+  },
+  {
+    "firstname": "Ivan_1",
+    "lastname": "Ivanov_1",
+    "address": "Address_1",
+    "homephone": "11 11 11",
+    "mobile": "+375 (29) 111 11 11",
+    "email": "email_1@mail.ru",
+    "email2": "email2_1@mail.ru",
+    "bday": "2",
+    "bmonth": "September",
+    "byear": "1981"
+  }
+]
