@@ -1,0 +1,41 @@
+<list>
+  <contact>
+    <firstname>Ivan_0</firstname>
+    <lastname>Ivanov_0</lastname>
+    <address>Address_0</address>
+    <homephone>11 11 10</homephone>
+    <mobile>+375 (29) 111 11 10</mobile>
+    <email>email_0@mail.ru</email>
+    <email2>email2_0@mail.ru</email2>
+    <bday>1</bday>
+    <bmonth>September</bmonth>
+    <byear>1980</byear>
+    <group>test0</group>
+  </contact>
+  <contact>
+    <firstname>Ivan_1</firstname>
+    <lastname>Ivanov_1</lastname>
+    <address>Address_1</address>
+    <homephone>11 11 11</homephone>
+    <mobile>+375 (29) 111 11 11</mobile>
+    <email>email_1@mail.ru</email>
+    <email2>email2_1@mail.ru</email2>
+    <bday>2</bday>
+    <bmonth>September</bmonth>
+    <byear>1981</byear>
+    <group>test1</group>
+  </contact>
+  <contact>
+    <firstname>Ivan_2</firstname>
+    <lastname>Ivanov_2</lastname>
+    <address>Address_2</address>
+    <homephone>11 11 12</homephone>
+    <mobile>+375 (29) 111 11 12</mobile>
+    <email>email_2@mail.ru</email>
+    <email2>email2_2@mail.ru</email2>
+    <bday>3</bday>
+    <bmonth>September</bmonth>
+    <byear>1982</byear>
+    <group>test2</group>
+  </contact>
+</list>

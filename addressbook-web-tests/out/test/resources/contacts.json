@@ -1,7 +1,7 @@
 [
   {
-    "firstname": "Ivan_0",
-    "lastname": "Ivanov_0",
+    "firstname": "Ivana_0",
+    "lastname": "Ivanova_0",
     "address": "Address_0",
     "homephone": "11 11 10",
     "mobile": "+375 (29) 111 11 10",
@@ -9,11 +9,12 @@
     "email2": "email2_0@mail.ru",
     "bday": "1",
     "bmonth": "September",
-    "byear": "1980"
+    "byear": "1980",
+    "group": "test0"
   },
   {
-    "firstname": "Ivan_1",
-    "lastname": "Ivanov_1",
+    "firstname": "Ivana_1",
+    "lastname": "Ivanova_1",
     "address": "Address_1",
     "homephone": "11 11 11",
     "mobile": "+375 (29) 111 11 11",
@@ -21,6 +22,20 @@
     "email2": "email2_1@mail.ru",
     "bday": "2",
     "bmonth": "September",
-    "byear": "1981"
+    "byear": "1981",
+    "group": "test1"
+  },
+  {
+    "firstname": "Ivana_2",
+    "lastname": "Ivanova_2",
+    "address": "Address_2",
+    "homephone": "11 11 12",
+    "mobile": "+375 (29) 111 11 12",
+    "email": "email_2@mail.ru",
+    "email2": "email2_2@mail.ru",
+    "bday": "3",
+    "bmonth": "September",
+    "byear": "1982",
+    "group": "test2"
   }
 ]
