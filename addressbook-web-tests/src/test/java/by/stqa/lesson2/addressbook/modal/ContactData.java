@@ -38,6 +38,7 @@ public class ContactData {
     private String bmonth;
     @Expose
     private String byear;
+    @Expose
     private String group;
     private String allphones;
     private String allemails;
