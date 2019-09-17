@@ -40,18 +40,16 @@ public class ApplicationManager {
         else if (browser.equals(BrowserType.IE)){
             wd = new InternetExplorerDriver();
         }
-
         wd.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
         wd.get(properties.getProperty("web.baseUrl"));
         sessionHelper = new SessionHelper(wd);
-        sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
+        sessionHelper.login(properties.getProperty("web.adminLogin"),
+                            properties.getProperty("web.adminPassword"));
         navigationHelper = new NavigationHelper(wd);
         groupHelper = new GroupHelper(wd);
         contactHelper = new ContactHelper(wd);
 
     }
-
-
 
     public void stop() {
         wd.quit();
