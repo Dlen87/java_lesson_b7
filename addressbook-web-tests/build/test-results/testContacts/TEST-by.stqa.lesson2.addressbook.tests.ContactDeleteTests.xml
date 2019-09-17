@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="by.stqa.lesson2.addressbook.tests.ContactDeleteTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-09-17T07:09:56" hostname="Igor-PC" time="4.607">
+  <properties/>
+  <testcase name="testContactDelete" classname="by.stqa.lesson2.addressbook.tests.ContactDeleteTests" time="4.607"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
