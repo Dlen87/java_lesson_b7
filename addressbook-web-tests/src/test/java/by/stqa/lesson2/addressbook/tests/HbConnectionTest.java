@@ -1,5 +1,6 @@
 package by.stqa.lesson2.addressbook.tests;
 
+import by.stqa.lesson2.addressbook.modal.ContactData;
 import by.stqa.lesson2.addressbook.modal.GroupData;
 import org.hibernate.Session;
 import org.hibernate.SessionBuilder;
@@ -24,7 +25,7 @@ public class HbConnectionTest {
                 .configure() // configures settings from hibernate.cfg.xml
                 .build();
         try {
-            SessionFactory sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+             sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -34,13 +35,26 @@ public class HbConnectionTest {
         }
     }
 
-    @Test
-    public void testHbConnection(){
+    @Test(enabled = false)
+    public void testHbConnectionGroup(){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<GroupData> result = session.createQuery( "from GroupData" ).list();
         for ( GroupData group : result) {
             System.out.println(group);
+        }
+        session.getTransaction().commit();
+        session.close();
+
+    }
+
+    @Test
+    public void testHbConnectionContact(){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<ContactData> result = session.createQuery( "from ContactData" ).list();
+        for ( ContactData contact : result) {
+            System.out.println(contact);
         }
         session.getTransaction().commit();
         session.close();
