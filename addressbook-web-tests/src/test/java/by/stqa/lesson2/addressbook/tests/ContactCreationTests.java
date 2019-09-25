@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,11 +74,11 @@ public class ContactCreationTests extends TestBase {
   @Test (dataProvider = "validContactsFromJson")
   public void testContactCreation(ContactData contact) throws Exception {
     app.goTo().homePage();
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     app.contact().cretion(contact);
-    Contacts after = app.contact().all();
-    assertThat(after, equalTo(before.withAdded(
-            contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
+    Contacts after = app.db().contacts();
+    Contacts beforeAdd = before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()));
+    assertThat(after,equalTo(beforeAdd));
   }
 
 
