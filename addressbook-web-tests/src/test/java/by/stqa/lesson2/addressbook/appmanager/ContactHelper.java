@@ -2,6 +2,8 @@ package by.stqa.lesson2.addressbook.appmanager;
 
 import by.stqa.lesson2.addressbook.modal.ContactData;
 import by.stqa.lesson2.addressbook.modal.Contacts;
+import by.stqa.lesson2.addressbook.modal.GroupData;
+import by.stqa.lesson2.addressbook.modal.Groups;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -33,12 +35,14 @@ public class ContactHelper extends BaseHelper{
      //   attach(By.name("photo"), contactData.getPhoto());
         wasBornUser(contactData.getBday(), contactData.getBmonth(), contactData.getByear());
         if (contactForm){
-            try{
-                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-            }
-            catch (NoSuchElementException ex){
-                return;
-            }
+           if (contactData.getGroups().size() > 0){
+                    Assert.assertTrue(contactData.getGroups().size() == 1);
+                    try{  new Select(wd.findElement(By.name("new_group")))
+                            .selectByVisibleText(contactData.getGroups().iterator().next().getName());
+                } catch (NoSuchElementException ex){
+                        return;
+                    }
+           }
         }
         else{
             Assert.assertFalse(isElementPresent(By.name("new_group")));
@@ -78,6 +82,69 @@ public class ContactHelper extends BaseHelper{
         selectedContactsById(contact.getId());
         deleteSelectedContacts();
         contactCache = null;
+    }
+
+    public void move(ContactData contact, String group) {
+        selectedContactsById(contact.getId());
+        int idSelectedGroup = selectGroupForContact(group);
+      //  String nameSelectedGroup = nameSelectedGroup(idSelectedGroup, 2);
+        if (contact.getGroups().size() != 0) {
+            int idGroupContact = contact.getGroups().iterator().next().getId();
+            if (idGroupContact != idSelectedGroup) {
+                addToGroup();
+                returnPageElementsGroup(group);
+            }
+        }else {
+            addToGroup();
+            returnPageElementsGroup(group);
+        }
+    }
+
+    public int selectGroupForContact(String group) {
+        click(By.cssSelector("select[name=\"to_group\"]"));
+        new Select(wd.findElement(By.cssSelector("select[name=\"to_group\"]"))).selectByVisibleText(group);
+        int id = getIdSelectedGroup();
+        click(By.cssSelector("select[name=\"to_group\"] > option[value=\"" + id + "\"]"));
+        return id;
+    }
+
+    public int getIdSelectedGroup() {
+        return Integer.parseInt(wd.findElement(By.cssSelector("select[name=\"to_group\"]")).getAttribute("value"));
+    }
+
+
+    public void deleteFromGroup(ContactData contact, String group) {
+        int idGroup = 1;
+        Groups groups = contact.getGroups();
+        for (GroupData g : groups){
+            if (group.equals(g.getName())){
+                idGroup = g.getId();
+            }
+        }
+        selectGroupForDeleteContact(group, idGroup);
+
+        selectedContactsById(contact.getId());
+
+        removeFromGroup();
+        returnPageElementsGroup(group);
+    }
+
+    private void selectGroupForDeleteContact(String group, int idGroup) {
+        click(By.xpath("//select[@name='group']"));
+        new Select(wd.findElement(By.xpath("//select[@name='group']"))).selectByVisibleText(group);
+        click(By.xpath("//option[@value='" + idGroup + "']"));
+    }
+
+    private void removeFromGroup() {
+        click(By.xpath("//input[@name='remove']"));
+    }
+
+    private void addToGroup() {
+        click(By.cssSelector("input[name=\"add\"]"));
+    }
+
+    private void returnPageElementsGroup(String group) {
+               click(By.linkText("group page \"" + group + "\""));
     }
 
     public void cretion(ContactData contact) {

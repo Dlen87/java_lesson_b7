@@ -36,7 +36,8 @@ public class ContactCreationTests extends TestBase {
               .withBday(split[5].replaceFirst(" ",""))
               .withBmonth(split[6].replaceFirst(" ",""))
               .withByear(split[7].replaceFirst(" ",""))
-              .withGroup(split[8].replaceFirst(" ",""))});
+              //.withGroup(split[8].replaceFirst(" ",""))
+              });
       line = reader.readLine();
     }
     return list.iterator();
@@ -79,6 +80,7 @@ public class ContactCreationTests extends TestBase {
     Contacts after = app.db().contacts();
     Contacts beforeAdd = before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()));
     assertThat(after,equalTo(beforeAdd));
+    verifyContactListInUI();
   }
 
 

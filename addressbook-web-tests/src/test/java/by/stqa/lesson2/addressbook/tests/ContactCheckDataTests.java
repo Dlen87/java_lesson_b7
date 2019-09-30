@@ -24,7 +24,8 @@ public class ContactCheckDataTests extends TestBase {
                     .withHomephone("+375(29)99-8-96").withMobile("8-29-3456789").withWorkphone("33 33 33")
                     .withEmail("Ivanov@mail.ru").withEmail2("I_vanov@yandex.ru").withEmail3("I.vanov@gmail.com")
                     .withBday("19").withBmonth("May").withByear("1987")
-                    .withGroup("test1"));
+                   // .withGroup("test1")
+            );
         }
     }
 

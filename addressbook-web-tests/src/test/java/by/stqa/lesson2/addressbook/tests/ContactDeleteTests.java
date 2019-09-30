@@ -7,6 +7,8 @@ import org.hamcrest.MatcherAssert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
 
 public class ContactDeleteTests extends TestBase{
@@ -20,7 +22,8 @@ public class ContactDeleteTests extends TestBase{
               .withNickname("Kat").withCompany("IBA2").withAddress("Russia")
               .withHomephone("99-8-96").withMobile("375-29-3456789").withEmail("Dunian@mail.ru")
               .withBday("19").withBmonth("May").withByear("1987")
-              .withGroup("test1"));
+             // .withGroup("test1")
+      );
     }
   }
 
@@ -31,7 +34,8 @@ public class ContactDeleteTests extends TestBase{
     app.contact().delete(deletedContact);
     Contacts after = app.db().contacts();
     assertEquals(after.size(), before.size() - 1);
-    MatcherAssert.assertThat(after, CoreMatchers.equalTo(before.withOut(deletedContact)));
+    assertThat(after, equalTo(before.withOut(deletedContact)));
+    verifyContactListInUI();
   }
 
 

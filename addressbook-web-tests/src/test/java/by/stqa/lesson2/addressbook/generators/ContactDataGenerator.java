@@ -77,7 +77,9 @@ public class ContactDataGenerator {
             for (ContactData contact : contacts){
                 writer.write(String.format("%s; %s; %s; %s; %s; %s; %s; %s; %s;\n",contact.getLastname(),
                         contact.getFirstname(), contact.getMobile(), contact.getEmail(),
-                        contact.getAddress(), contact.getBday(), contact.getBmonth(), contact.getByear(), contact.getGroup()));
+                        contact.getAddress(), contact.getBday(), contact.getBmonth(), contact.getByear()
+                       // , contact.getGroup()
+                ));
             }
         }
 
@@ -96,7 +98,8 @@ public class ContactDataGenerator {
                     .withBday(String.format("%s", i + 1))
                     .withBmonth("September")
                     .withByear(String.format("198%s", i))
-                    .withGroup(String.format("test%s", i)));
+                   // .withGroup(String.format("test%s", i))
+            );
         }
         return contacts;
     }

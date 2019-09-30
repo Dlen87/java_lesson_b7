@@ -7,7 +7,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
-import java.util.Objects;
+import java.util.*;
 
 @XStreamAlias("contact")
 @Entity
@@ -77,15 +77,19 @@ public class ContactData {
     @Expose
     @Transient
     private String byear;
-    @Expose
-    @Transient
-    private String group;
+
     @Transient
     private String allphones;
     @Transient
     private String allemails;
     @Transient
     private String  photo;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups",
+               joinColumns = @JoinColumn(name = "id"),
+               inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<GroupData> groups = new HashSet<GroupData>();
 
     public ContactData withPhoto(File photo) {
         this.photo = photo.getPath();
@@ -177,15 +181,15 @@ public class ContactData {
         return this;
     }
 
-    public ContactData withGroup(String group) {
-        this.group = group;
-        return this;
-    }
-
     public ContactData withWorkphone(String work) {
         this.work = work;
         return this;
     }
+
+    public Groups getGroups() {
+        return new Groups(groups);
+    }
+
     public File getPhoto() {
         return new File(photo);
     }
@@ -262,10 +266,6 @@ public class ContactData {
         return byear;
     }
 
-    public String getGroup() {
-        return group;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -274,14 +274,17 @@ public class ContactData {
         return id == that.id &&
                 Objects.equals(firstname, that.firstname) &&
                 Objects.equals(lastname, that.lastname) &&
+                Objects.equals(company, that.company) &&
                 Objects.equals(address, that.address) &&
                 Objects.equals(mobile, that.mobile) &&
-                Objects.equals(email, that.email);
+                Objects.equals(work, that.work) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(groups, that.groups);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastname, address, mobile, email);
+        return Objects.hash(id, firstname, lastname, company, address, mobile, work, email, groups);
     }
 
     @Override
