@@ -9,40 +9,34 @@ package by.stqa.lesson2.addressbook.tests;
  import static org.hamcrest.CoreMatchers.equalTo;
  import static org.hamcrest.MatcherAssert.assertThat;
 
- import org.openqa.selenium.*;
+ import java.util.HashSet;
+ import java.util.Set;
 
 public class ContactAddToGroupTests extends TestBase{
 
-    private Boolean cretionGroup = false;
-
     @BeforeMethod
     public void ensurePrecondition(){
-        if (app.db().contacts().size() == 0){
-            app.contact().cretion(new ContactData()
-                    .withFirstname("Anna").withMiddlename("Ivanovna").withLastname("Dunian")
-                    .withNickname("Kat").withCompany("IBA2").withAddress("Russia")
-                    .withHomephone("99-8-96").withMobile("375-29-3456789").withEmail("Dunian@mail.ru")
-                    .withBday("19").withBmonth("May").withByear("1987"));
-        }
+        GroupData newGroup = new GroupData().withName("test1").withHeader("header1").withFooter("footer1");
+        Set<GroupData> group = new HashSet<>();
+        group.add(newGroup);
+
         if (app.db().groups().size() == 0) {
             app.goTo().groupPage();
-            app.group().cretion(new GroupData().withName("test1").withHeader("header1").withFooter("footer1"));
-            cretionGroup = true;
+            app.group().cretion(newGroup);
+            app.contact().addFirstContatc(group);
+        }
+        if (app.db().contacts().size() == 0){
+            app.contact().addFirstContatc(group);
         }
     }
-
 
     @Test
     public void testContactAddToGroup() throws Exception {
         app.goTo().homePage();
         Contacts before = app.db().contacts();
         Groups groups = app.db().groups();
-        String groupSelected = "";
-        if (cretionGroup){
-            groupSelected = groups.iterator().next().getName();
-        }else {
-            groupSelected = "test2";
-        }
+
+        String groupSelected = groups.iterator().next().getName();
         ContactData moveContact = before.iterator().next();
         Groups  groupsBefore = moveContact.getGroups();
 

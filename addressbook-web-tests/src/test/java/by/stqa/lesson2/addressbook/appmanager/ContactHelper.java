@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends BaseHelper{
 
@@ -87,7 +88,6 @@ public class ContactHelper extends BaseHelper{
     public void move(ContactData contact, String group) {
         selectedContactsById(contact.getId());
         int idSelectedGroup = selectGroupForContact(group);
-      //  String nameSelectedGroup = nameSelectedGroup(idSelectedGroup, 2);
         if (contact.getGroups().size() != 0) {
             int idGroupContact = contact.getGroups().iterator().next().getId();
             if (idGroupContact != idSelectedGroup) {
@@ -228,5 +228,14 @@ public class ContactHelper extends BaseHelper{
                 .withHomephone(home).withMobile(mobile).withWorkphone(work)
                 .withEmail(email).withEmail2(email2).withEmail3(email3)
                 .withAddress(address);
+    }
+
+    public void addFirstContatc(Set<GroupData> group) {
+        cretion(new ContactData()
+                .withFirstname("CAnna").withMiddlename("Ivanovna").withLastname("CDunian")
+                .withNickname("CKat").withCompany("FIBA2").withAddress("Russia")
+                .withHomephone("99-8-96").withMobile("375-29-3456789").withEmail("FDunian@mail.ru")
+                .withBday("19").withBmonth("May").withByear("1987")
+                .withGroups(group));
     }
 }

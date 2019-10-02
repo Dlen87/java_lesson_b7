@@ -186,6 +186,11 @@ public class ContactData {
         return this;
     }
 
+    public ContactData withGroups(Set<GroupData> groups) {
+        this.groups = groups;
+        return this;
+    }
+
     public Groups getGroups() {
         return new Groups(groups);
     }

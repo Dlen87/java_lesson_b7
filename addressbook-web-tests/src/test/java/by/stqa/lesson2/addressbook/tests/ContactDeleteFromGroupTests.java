@@ -5,8 +5,8 @@ import by.stqa.lesson2.addressbook.modal.Contacts;
 import by.stqa.lesson2.addressbook.modal.GroupData;
 import by.stqa.lesson2.addressbook.modal.Groups;
 import org.testng.annotations.*;
-import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.Select;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,29 +16,58 @@ public class ContactDeleteFromGroupTests extends TestBase {
 
     @BeforeMethod
     public void ensurePrecondition(){
+        GroupData newGroup = new GroupData().withName("test1").withHeader("header1").withFooter("footer1");
+        Set<GroupData> group = new HashSet<>();
+        group.add(newGroup);
+
+        if (app.db().groups().size() == 0){
+            app.goTo().groupPage();
+            app.group().cretion(newGroup);
+            app.contact().addFirstContatc(group);
+        }
         if (app.db().contacts().size() == 0){
-            app.contact().cretion(new ContactData()
-                    .withFirstname("Anna").withMiddlename("Ivanovna").withLastname("Dunian")
-                    .withNickname("Kat").withCompany("IBA2").withAddress("Russia")
-                    .withHomephone("99-8-96").withMobile("375-29-3456789").withEmail("Dunian@mail.ru")
-                    .withBday("19").withBmonth("May").withByear("1987"));
+            app.contact().addFirstContatc(group);
         }
     }
 
-
     @Test
     public void testContactDeleteFromGroup() throws Exception {
+        ContactData deleteContact = new ContactData();
+        Contacts contactsBefore = new Contacts();
+        Contacts contactsAfter  = new Contacts();
+        Boolean delete = false;
+        String group ="";
+
         app.goTo().homePage();
-        String groupSelected = "test1";
         Groups before = app.db().groups();
-        GroupData selectedGroup = before.iterator().next();
-        Contacts  contactsBefore = selectedGroup.getContacts();
+        for (GroupData g : before){
+            group = g.getName();
+            contactsBefore = g.getContacts();
+            if (contactsBefore.size() != 0){
+                deleteContact = contactsBefore.iterator().next();
+                delete = true;
+                break;
+            }
+        }
 
-        ContactData deleteContact = contactsBefore.iterator().next();
-        //Contacts before = app.db().contacts();
-        //ContactData deleteContact = before.iterator().next();
-        app.contact().deleteFromGroup(deleteContact, groupSelected);
+        if (delete && !group.equals("")){
+            app.contact().deleteFromGroup(deleteContact,group);
+        }else {
+            System.out.println("В группе " + group + " нет контактов");
+        }
 
+        Groups after = app.db().groups();
+        for (GroupData g : after){
+            if (group.equals(g.getName())){
+                contactsAfter = g.getContacts();
+                break;
+            }
+        }
+        if (delete){
+            assertThat(contactsAfter, equalTo(contactsBefore.withOut(deleteContact)));
+        }else {
+            assertThat(contactsAfter, equalTo(contactsBefore));
+        }
 
 
     }
