@@ -53,7 +53,19 @@ public class ContactDeleteFromGroupTests extends TestBase {
         if (delete && !group.equals("")){
             app.contact().deleteFromGroup(deleteContact,group);
         }else {
-            System.out.println("В группе " + group + " нет контактов");
+            ContactData someContact = app.db().contacts().iterator().next();
+            if (!group.equals("")) {
+                app.goTo().homePage();
+                app.contact().move(someContact, group);
+            }
+            Contacts contacts = app.db().contacts();
+            for (ContactData c : contacts){
+                if (c.getGroups().size() != 0){
+                    someContact = c;
+                    break;
+                }
+            }
+            app.contact().deleteFromGroup(someContact,group);
         }
 
         Groups after = app.db().groups();

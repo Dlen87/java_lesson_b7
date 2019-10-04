@@ -35,12 +35,25 @@ public class ContactAddToGroupTests extends TestBase{
         app.goTo().homePage();
         Contacts before = app.db().contacts();
         Groups groups = app.db().groups();
+        int findGroup = 0;
 
         String groupSelected = groups.iterator().next().getName();
         ContactData moveContact = before.iterator().next();
         Groups  groupsBefore = moveContact.getGroups();
 
-        app.contact().move(moveContact, groupSelected);
+        findGroup = getFindGroup(findGroup, groupSelected, groupsBefore);
+
+        if (findGroup == 0){
+            app.contact().move(moveContact, groupSelected);
+        }else {
+            for (ContactData c : before){
+                if (c.getGroups().size() == 0){
+                    moveContact = c;
+                    break;
+                }
+            }
+            app.contact().move(moveContact, groupSelected);
+        }
 
         Contacts after = app.db().contacts();
         Groups groupsAfter = after.iterator().next().getGroups();
@@ -51,6 +64,15 @@ public class ContactAddToGroupTests extends TestBase{
         }else{
             assertThat(groupsAfter, equalTo(groupsBefore));
         }
+    }
+
+    private int getFindGroup(int findGroup, String groupSelected, Groups groupsBefore) {
+        for (GroupData g : groupsBefore){
+            if (groupSelected.equals(g.getName())){
+                findGroup = 1;
+            }
+        }
+        return findGroup;
     }
 
     private GroupData getDataSeletedGroup(Groups groups, String groupSelected) {
