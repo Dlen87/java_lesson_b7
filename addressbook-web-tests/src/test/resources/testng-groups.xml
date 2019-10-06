@@ -4,8 +4,6 @@
     <test name="Groups" >
         <classes>
             <class name="by.stqa.lesson2.addressbook.tests.GroupCreationTests" />
-            <class name="by.stqa.lesson2.addressbook.tests.GroupModificationTests" />
-            <class name="by.stqa.lesson2.addressbook.tests.GroupDeletionTests" />
         </classes>
     </test>
 </suite>
