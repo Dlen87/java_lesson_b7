@@ -37,7 +37,6 @@ public class ContactDeleteFromGroupTests extends TestBase {
         Contacts contactsAfter  = new Contacts();
         Boolean delete = false;
         String group ="";
-
         app.goTo().homePage();
         Groups before = app.db().groups();
         for (GroupData g : before){
@@ -49,7 +48,6 @@ public class ContactDeleteFromGroupTests extends TestBase {
                 break;
             }
         }
-
         if (delete && !group.equals("")){
             app.contact().deleteFromGroup(deleteContact,group);
         }else {
@@ -67,7 +65,6 @@ public class ContactDeleteFromGroupTests extends TestBase {
             }
             app.contact().deleteFromGroup(someContact,group);
         }
-
         Groups after = app.db().groups();
         for (GroupData g : after){
             if (group.equals(g.getName())){
@@ -75,12 +72,7 @@ public class ContactDeleteFromGroupTests extends TestBase {
                 break;
             }
         }
-        if (delete){
-            assertThat(contactsAfter, equalTo(contactsBefore.withOut(deleteContact)));
-        }else {
-            assertThat(contactsAfter, equalTo(contactsBefore));
-        }
-
+        assertThat(contactsAfter, equalTo(contactsBefore.withOut(deleteContact)));
 
     }
 

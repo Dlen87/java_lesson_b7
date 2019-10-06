@@ -17,16 +17,16 @@ public class ContactAddToGroupTests extends TestBase{
     @BeforeMethod
     public void ensurePrecondition(){
         GroupData newGroup = new GroupData().withName("test1").withHeader("header1").withFooter("footer1");
-        Set<GroupData> group = new HashSet<>();
-        group.add(newGroup);
-
         if (app.db().groups().size() == 0) {
             app.goTo().groupPage();
             app.group().cretion(newGroup);
-            app.contact().addFirstContatc(group);
         }
         if (app.db().contacts().size() == 0){
-            app.contact().addFirstContatc(group);
+            app.contact().cretion(new ContactData()
+                    .withFirstname("CAnna").withMiddlename("Ivanovna").withLastname("CDunian")
+                    .withNickname("CKat").withCompany("FIBA2").withAddress("Russia")
+                    .withHomephone("99-8-96").withMobile("375-29-3456789").withEmail("FDunian@mail.ru")
+                    .withBday("19").withBmonth("May").withByear("1987"));
         }
     }
 
@@ -58,12 +58,8 @@ public class ContactAddToGroupTests extends TestBase{
         Contacts after = app.db().contacts();
         Groups groupsAfter = after.iterator().next().getGroups();
 
-        if (groupsBefore.size() != groupsAfter.size()){
-            Groups groupsAdd = groupsBefore.withAdded(getDataSeletedGroup(groups, groupSelected));
-            assertThat(groupsAfter, equalTo(groupsAdd));
-        }else{
-            assertThat(groupsAfter, equalTo(groupsBefore));
-        }
+        Groups groupsAdd = groupsBefore.withAdded(getDataSeletedGroup(groups, groupSelected));
+        assertThat(groupsAfter, equalTo(groupsAdd));
     }
 
     private int getFindGroup(int findGroup, String groupSelected, Groups groupsBefore) {
