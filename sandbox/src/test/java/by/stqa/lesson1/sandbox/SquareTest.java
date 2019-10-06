@@ -9,6 +9,6 @@ public class SquareTest {
     public void testArea(){
         int a = 2;
         int square = a * a;
-        Assert.assertEquals(square, 4);
+        Assert.assertEquals(square, 3);
     }
 }
