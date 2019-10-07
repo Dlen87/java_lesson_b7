@@ -17,7 +17,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class TestBase {
 
     protected static final ApplicationManager app
-            = new ApplicationManager(System.getProperty("browser",BrowserType.FIREFOX));
+            = new ApplicationManager(System.getProperty("browser",BrowserType.FIREFOX),
+            System.getProperty("target","local"));
 
     @BeforeSuite
     public void setUp() throws Exception {
