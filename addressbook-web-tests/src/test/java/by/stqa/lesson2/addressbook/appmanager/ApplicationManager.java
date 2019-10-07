@@ -20,19 +20,20 @@ public class ApplicationManager {
     private final Properties properties;
     public WebDriver wd;
     private String browser;
+    private String target;
     private NavigationHelper navigationHelper;
     private ContactHelper contactHelper;
     private GroupHelper groupHelper;
     private SessionHelper sessionHelper;
     private DbHelper dbHelper;
 
-    public ApplicationManager(String browser) {
-        this.browser=browser;
+    public ApplicationManager(String browser, String  target) {
+        this.browser = browser;
+        this.target = target;
         properties = new Properties();
     }
 
     public void init() throws IOException {
-        String target = properties.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
 
         dbHelper = new DbHelper();
