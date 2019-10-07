@@ -2,6 +2,7 @@ package by.stqa.lesson8.mantis.tests;
 
 import by.stqa.lesson8.mantis.appmanager.HttpSession;
 import by.stqa.lesson8.mantis.model.MailMessage;
+import by.stqa.lesson8.mantis.model.User;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -21,24 +22,21 @@ public class ResetedPasswordUserTests extends TestBase {
 
     @Test
     public void testResetPasswordUser() throws Exception {
-        long now = System.currentTimeMillis();
-        String user =  String.format("user%s", now);
-        String email = String.format("user%s@localhost.localdomain", now);
-        String password = "passw";
-        registrationUser(user, email, password);
+        List<User> users = app.db().users();
+        User user = users.iterator().next();
 
         app.reset().goToLoginPage();
         app.reset().loginToMantis( "username", "administrator");
         app.reset().loginToMantis( "password", "secret");
         app.reset().controlUsers();
-        app.reset().selectUser(user);
+        app.reset().selectUser(user.getNameUser());
         app.reset().resetPassword();
 
-        password = "pass";
-        setNewPassword(user, email, password);
+        String password = "pass";
+        setNewPassword(user.getNameUser(), user.getEmailUser(), password);
 
         HttpSession session = app.newSession();
-        assertTrue(session.login(user, password));
+        assertTrue(session.login(user.getNameUser(), password));
     }
 
     private void setNewPassword(String user, String email, String password) {
