@@ -34,7 +34,7 @@ public class HttpSession{
         post.setEntity(new UrlEncodedFormEntity(parama));
         CloseableHttpResponse response = httpClient.execute(post);
         String body = geTextFrom(response);
-        return body.contains(String.format("<a href=\"/mantisbt-2.22.0/account_page.php\">%s</a>", username));
+        return body.contains(String.format("<a href=\"/mantisbt-2.22.0/account_page.php\">%s ( " + username + " ) </a>", username));
 
     }
 
