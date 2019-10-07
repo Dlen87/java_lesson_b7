@@ -20,7 +20,7 @@ public class ApplicationManager {
     private final Properties properties;
     public WebDriver wd;
     private String browser;
-    private String target;
+    private String target;//
     private NavigationHelper navigationHelper;
     private ContactHelper contactHelper;
     private GroupHelper groupHelper;
@@ -29,13 +29,12 @@ public class ApplicationManager {
 
     public ApplicationManager(String browser, String  target) {
         this.browser = browser;
-        this.target = target;
+        this.target = target; //
         properties = new Properties();
     }
 
     public void init() throws IOException {
-        properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
-
+        properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));//
         dbHelper = new DbHelper();
 
         if ("".equals(properties.getProperty("selenium.server"))){

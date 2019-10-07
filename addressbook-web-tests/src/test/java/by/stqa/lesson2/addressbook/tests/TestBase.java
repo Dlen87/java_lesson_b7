@@ -19,6 +19,7 @@ public class TestBase {
     protected static final ApplicationManager app
             = new ApplicationManager(System.getProperty("browser",BrowserType.FIREFOX),
             System.getProperty("target","local"));
+    //параметр target, для запуска selenium-server target=remote
 
     @BeforeSuite
     public void setUp() throws Exception {
