@@ -34,7 +34,8 @@ public class ContactDeleteFromGroupTests extends TestBase {
     public void testContactDeleteFromGroup() throws Exception {
         ContactData deleteContact = new ContactData();
         Contacts contactsBefore = new Contacts();
-        Contacts contactsAfter  = new Contacts();
+        Contacts contactsAfter = new Contacts();
+    //    int count = app.db().contacts().size();
         Boolean delete = false;
         String group ="";
         app.goTo().homePage();
@@ -48,32 +49,35 @@ public class ContactDeleteFromGroupTests extends TestBase {
                 break;
             }
         }
-        if (delete && !group.equals("")){
-            app.contact().deleteFromGroup(deleteContact,group);
-        }else {
-            ContactData someContact = app.db().contacts().iterator().next();
-            if (!group.equals("")) {
-                app.goTo().homePage();
-                app.contact().move(someContact, group);
-            }
+        if (!delete){
+            deleteContact = app.db().contacts().iterator().next();
+            app.goTo().homePage();
+            app.contact().move(deleteContact, group);
+            contactsBefore = getListContacts(contactsBefore, group);
             Contacts contacts = app.db().contacts();
             for (ContactData c : contacts){
-                if (c.getGroups().size() != 0){
-                    someContact = c;
+                if (c.getId() == deleteContact.getId()){
+                    deleteContact = c;
                     break;
                 }
             }
-            app.contact().deleteFromGroup(someContact,group);
         }
-        Groups after = app.db().groups();
-        for (GroupData g : after){
-            if (group.equals(g.getName())){
-                contactsAfter = g.getContacts();
-                break;
-            }
-        }
+        app.contact().deleteFromGroup(deleteContact,group);
+
+        contactsAfter = getListContacts(contactsAfter, group);
+
         assertThat(contactsAfter, equalTo(contactsBefore.withOut(deleteContact)));
 
+    }
+
+    private Contacts getListContacts(Contacts contacts, String group) {
+        Groups before = app.db().groups();
+        for (GroupData g : before){
+            if (group.equals(g.getName())){
+                contacts = g.getContacts();
+            }
+        }
+        return contacts;
     }
 
 
