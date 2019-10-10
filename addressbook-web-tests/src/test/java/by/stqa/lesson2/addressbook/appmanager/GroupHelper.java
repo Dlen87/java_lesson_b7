@@ -50,9 +50,6 @@ public class GroupHelper extends BaseHelper{
         click(By.name("update"));
     }
 
-    public void returnToGroupPage() {
-        click(By.linkText("group page"));
-    }
 
     public void cretion(GroupData group) {
         initGroupCreation();
@@ -98,6 +95,24 @@ public class GroupHelper extends BaseHelper{
             groupCache.add( new GroupData().withId(id).withName(nameGr));
         }
         return new Groups(groupCache);
+    }
+
+    public void createNewGroup() {
+        long now = System.currentTimeMillis();
+        GroupData newGroup = new GroupData().withName(String.format("test%s", now))
+                .withHeader(String.format("header%s", now))
+                .withFooter(String.format("footer%s", now));
+
+        goToGroupPage();
+        cretion(newGroup);
+    }
+
+    private void goToGroupPage() {
+        click(By.linkText("groups"));
+    }
+
+    private void returnToGroupPage() {
+        click(By.linkText("group page"));
     }
 
 

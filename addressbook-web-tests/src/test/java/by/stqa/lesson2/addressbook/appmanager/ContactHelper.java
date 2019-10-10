@@ -85,27 +85,18 @@ public class ContactHelper extends BaseHelper{
         contactCache = null;
     }
 
-    public void move(ContactData contact, String group) {
+    public void move(ContactData contact, GroupData group) {
+        goToHomePage();
         selectedContactsById(contact.getId());
-        int idSelectedGroup = selectGroupForContact(group);
-        if (contact.getGroups().size() != 0) {
-            int idGroupContact = contact.getGroups().iterator().next().getId();
-            if (idGroupContact != idSelectedGroup) {
-                addToGroup();
-                returnPageElementsGroup(group);
-            }
-        }else {
-            addToGroup();
-            returnPageElementsGroup(group);
-        }
+        selectGroupForContact(group);
+        addToGroup();
+        returnPageElementsGroup(group.getName());
     }
 
-    public int selectGroupForContact(String group) {
+    public void selectGroupForContact(GroupData group) {
         click(By.cssSelector("select[name=\"to_group\"]"));
-        new Select(wd.findElement(By.cssSelector("select[name=\"to_group\"]"))).selectByVisibleText(group);
-        int id = getIdSelectedGroup();
-        click(By.cssSelector("select[name=\"to_group\"] > option[value=\"" + id + "\"]"));
-        return id;
+        new Select(wd.findElement(By.cssSelector("select[name=\"to_group\"]"))).selectByVisibleText(group.getName());
+        click(By.cssSelector("select[name=\"to_group\"] > option[value=\"" + group.getId() + "\"]"));
     }
 
     public int getIdSelectedGroup() {
@@ -113,26 +104,17 @@ public class ContactHelper extends BaseHelper{
     }
 
 
-    public void deleteFromGroup(ContactData contact, String group) {
-        int idGroup = 1;
-        Groups groups = contact.getGroups();
-        for (GroupData g : groups){
-            if (group.equals(g.getName())){
-                idGroup = g.getId();
-            }
-        }
-        selectGroupForDeleteContact(group, idGroup);
-
+    public void deleteFromGroup(ContactData contact, GroupData group) {
+        selectGroupForDeleteContact(group);
         selectedContactsById(contact.getId());
-
         removeFromGroup();
-        returnPageElementsGroup(group);
+        returnPageElementsGroup(group.getName());
     }
 
-    private void selectGroupForDeleteContact(String group, int idGroup) {
+    private void selectGroupForDeleteContact(GroupData group) {
         click(By.xpath("//select[@name='group']"));
-        new Select(wd.findElement(By.xpath("//select[@name='group']"))).selectByVisibleText(group);
-        click(By.xpath("//option[@value='" + idGroup + "']"));
+        new Select(wd.findElement(By.xpath("//select[@name='group']"))).selectByVisibleText(group.getName());
+        click(By.xpath("//option[@value='" + group.getId() + "']"));
     }
 
     private void removeFromGroup() {
@@ -143,8 +125,8 @@ public class ContactHelper extends BaseHelper{
         click(By.cssSelector("input[name=\"add\"]"));
     }
 
-    private void returnPageElementsGroup(String group) {
-               click(By.linkText("group page \"" + group + "\""));
+    private void returnPageElementsGroup(String groupName) {
+               click(By.linkText("group page \"" + groupName + "\""));
     }
 
     public void cretion(ContactData contact) {
@@ -178,6 +160,10 @@ public class ContactHelper extends BaseHelper{
 
     public void returnToHomePage() {
         click(By.linkText("home page"));
+    }
+
+    public void goToHomePage() {
+        click(By.linkText("home"));
     }
 
     public Contacts all() {
@@ -238,4 +224,6 @@ public class ContactHelper extends BaseHelper{
                 .withBday("19").withBmonth("May").withByear("1987")
                 .withGroups(group));
     }
+
+
 }

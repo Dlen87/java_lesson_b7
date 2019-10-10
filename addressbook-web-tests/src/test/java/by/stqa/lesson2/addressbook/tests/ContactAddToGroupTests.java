@@ -37,17 +37,17 @@ public class ContactAddToGroupTests extends TestBase{
         Groups groups = app.db().groups();
         int findGroup = 0;
 
-        String groupSelected = groups.iterator().next().getName();
         ContactData moveContact = before.iterator().next();
         Groups  groupsBefore = moveContact.getGroups();
+        GroupData groupSelected = getGroupSelected(groups, before);
 
-        findGroup = getFindGroup(findGroup, groupSelected, groupsBefore);
+        findGroup = getFindGroup(findGroup, groupSelected.getName(), groupsBefore);
 
         if (findGroup != 0){
             for (ContactData c : before){
                 findGroup = 0;
                 if (c.getId() != moveContact.getId() && c.getGroups().size() < groups.size()){
-                    if ( getFindGroup(findGroup, groupSelected, c.getGroups()) == 0){
+                    if ( getFindGroup(findGroup, groupSelected.getName(), c.getGroups()) == 0){
                         moveContact = c;
                         groupsBefore = moveContact.getGroups();
                         break;
@@ -58,11 +58,41 @@ public class ContactAddToGroupTests extends TestBase{
         app.contact().move(moveContact, groupSelected);
 
         Contacts after = app.db().contacts();
+        groups = app.db().groups();
         Groups groupsAfter = getGroupsContactAfter(after, moveContact.getId());
 
-        Groups groupsAdd = groupsBefore.withAdded(getDataSeletedGroup(groups, groupSelected));
+        Groups groupsAdd = groupsBefore.withAdded(getDataSeletedGroup(groups, groupSelected.getName()));
         assertThat(groupsAfter, equalTo(groupsAdd));
     }
+
+    private GroupData getGroupSelected(Groups groups, Contacts before) {
+        GroupData groupSelected = new GroupData();
+        int allGroupFull = 1;
+        for (GroupData g : groups){
+            if (g.getContacts().size() < before.size()){
+                allGroupFull = 0;
+                groupSelected = g;
+                break;
+            }
+        }
+        if (allGroupFull == 1) {
+            app.group().createNewGroup();
+            groups = app.db().groups();
+            groupSelected = getEmptyGroup(groups);
+        }
+        return groupSelected;
+    }
+
+    private GroupData getEmptyGroup(Groups groups) {
+        GroupData emptyGroup = new GroupData();
+        for (GroupData g : groups){
+            if (g.getContacts().size() == 0){
+                emptyGroup = g;
+            }
+        }
+        return emptyGroup;
+    }
+
 
     private Groups getGroupsContactAfter(Contacts after, int idContact) {
         Groups groups = new Groups();
