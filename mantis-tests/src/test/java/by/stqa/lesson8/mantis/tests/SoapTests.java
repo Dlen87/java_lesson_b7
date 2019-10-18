@@ -19,7 +19,7 @@ public class SoapTests extends TestBase{
     public void checkStatusIssue() throws MalformedURLException, ServiceException, RemoteException {
         MantisConnectPortType mc = app.soap().getMantisConnect();
         Set<Project> projectSet = app.soap().getProjects();
-        IssueData[] issueData = mc.mc_project_get_issues("administrator", "root",
+        IssueData[] issueData = mc.mc_project_get_issues(app.getProperty("web.adminLogin"), app.getProperty("web.adminPassword"),
                 BigInteger.valueOf(projectSet.iterator().next().getId()), BigInteger.ONE, BigInteger.valueOf(10));
         skipIfNotFixed(issueData[0].getId().intValue());
 
