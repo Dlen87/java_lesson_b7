@@ -6,7 +6,6 @@
       <GradleProjectSettings>
         <option name="createEmptyContentRootDirectories" value="true" />
         <option name="delegatedBuild" value="false" />
-        <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/addressbook-web-tests" />
         <option name="modules">
@@ -14,12 +13,12 @@
             <option value="$PROJECT_DIR$/addressbook-web-tests" />
           </set>
         </option>
+        <option name="testRunner" value="PLATFORM" />
         <option name="useAutoImport" value="true" />
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="createEmptyContentRootDirectories" value="true" />
         <option name="delegatedBuild" value="false" />
-        <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/mantis-tests" />
         <option name="gradleHome" value="C:/Tools/gradle-5.5.1" />
@@ -28,12 +27,25 @@
             <option value="$PROJECT_DIR$/mantis-tests" />
           </set>
         </option>
+        <option name="testRunner" value="PLATFORM" />
+        <option name="useAutoImport" value="true" />
+        <option name="useQualifiedModuleNames" value="true" />
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="createEmptyContentRootDirectories" value="true" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/rest-sample" />
+        <option name="gradleHome" value="C:/Tools/gradle-5.5.1" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/rest-sample" />
+          </set>
+        </option>
         <option name="useAutoImport" value="true" />
         <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="delegatedBuild" value="false" />
-        <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/sandbox" />
         <option name="modules">
@@ -41,6 +53,7 @@
             <option value="$PROJECT_DIR$/sandbox" />
           </set>
         </option>
+        <option name="testRunner" value="PLATFORM" />
         <option name="useAutoImport" value="true" />
         <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
