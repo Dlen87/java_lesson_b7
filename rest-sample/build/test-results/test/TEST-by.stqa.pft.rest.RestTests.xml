@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="by.stqa.pft.rest.RestTests" tests="1" skipped="1" failures="0" errors="0" timestamp="2019-11-05T22:35:22" hostname="Igor-PC" time="0.0">
+  <properties/>
+  <testcase name="testCreateIssue" classname="by.stqa.pft.rest.RestTests" time="0.0">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
