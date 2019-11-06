@@ -11,7 +11,9 @@ import static org.testng.Assert.assertEquals;
 public class RestTests extends TestBase{
     @BeforeTest
     public void checkStatusIssue() throws IOException {
-        skipIfNotFixed(getIdIssue());
+        int idIssue = getIdIssue();
+        // int idIssue = getIdIssueClosed(); // for find some closed or resolved issue
+        skipIfNotFixed(idIssue);
     }
 
     @Test

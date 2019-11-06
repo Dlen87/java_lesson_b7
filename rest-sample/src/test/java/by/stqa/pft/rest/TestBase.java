@@ -13,17 +13,11 @@ import java.util.Set;
 public class TestBase {
 
     public boolean isIssueOpen(int issueId) throws IOException {
-        JsonElement issues = getIssuesFromBugify();
+        JsonElement issue = getIssueFromBugify(issueId);
         boolean state = false;
-        for (JsonElement a: issues.getAsJsonArray()){
-            int id = a.getAsJsonObject().getAsJsonPrimitive("id").getAsInt();
-            if (id == issueId){
-                String state_name = a.getAsJsonObject().get("state_name").getAsString();
-                if (state_name.equals("Open")){
-                    state = true;
-                }
-                break;
-            }
+        String state_name = issue.getAsJsonArray().get(0).getAsJsonObject().get("state_name").getAsString();
+        if (state_name.equals("Open")){
+            state = true;
         }
         return state;
     }
@@ -45,10 +39,29 @@ public class TestBase {
         return parsed.getAsJsonObject().get("issues");
     }
 
+    private JsonElement getIssueFromBugify(int idIssue) throws IOException {
+        String json = getExecuter().execute(Request.Get("https://bugify.stqa.ru/api/issues/" + idIssue + ".json")).returnContent().asString();
+        JsonElement parsed = new JsonParser().parse(json);
+        return parsed.getAsJsonObject().get("issues");
+    }
+
     public int getIdIssue() throws IOException {
         JsonElement issues = getIssuesFromBugify();
         JsonElement next = issues.getAsJsonArray().iterator().next();
         return next.getAsJsonObject().get("id").getAsInt();
+    }
+
+    public int getIdIssueClosed() throws IOException {
+        int idClosedIssue = 0;
+        JsonElement issues = getIssuesFromBugify();
+        for (JsonElement a: issues.getAsJsonArray()){
+            String state_name = a.getAsJsonObject().get("state_name").getAsString();
+            if ((state_name.equals("Closed") || (state_name.equals("Resolved")))){
+                idClosedIssue = a.getAsJsonObject().getAsJsonPrimitive("id").getAsInt();
+                break;
+            }
+        }
+        return idClosedIssue;
     }
 
     public Executor getExecuter() {
